@@ -90,8 +90,8 @@
                 </Header>
                 <Content :style="{margin: '20px', background: '#fff', minHeight: '841px'}">
                     <!-- 增加header -->
-                    {{ sharedState.clusterName }}
-                    {{ sharedState.namespace }}
+                    <!-- {{ sharedState.clusterName }}
+                    {{ sharedState.namespace }} -->
                     <!-- {{ sharedState.clusterList }}
                     {{ sharedState.namespaceList }} -->
                     <template v-if="sharedState.clusterList.length != 0" >
@@ -273,7 +273,6 @@
                             // 要不要设置state
                             store.setNamespaceList(namespace_list)
                             store.setNamespace(namespace_list[0])
-                            // console.log(' this.shsaredState.namespaceList:', this.sharedState.namespaceList)
                         }
                     }
                 }
