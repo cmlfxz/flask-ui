@@ -4,31 +4,29 @@
         <!-- {{allData}} -->
         <br>
         <!-- {{unscheduleData}}         -->
-        <i-row>
-            <i-col span="8">
+        <Row>
+
+            <i-col span="4">
                 <div id="cpu-pie" style="height: 400px"></div>
             </i-col>
-            <i-col span="8">
+            <i-col span="4">
                 <div id="memory-pie" style="height: 400px"></div>
             </i-col>
-            <i-col span="8">
+            <i-col span="4">
                 <div id="pod-pie" style="height: 400px"></div>
             </i-col>
-        <!-- <div id="cpu-pie" style="float:left; width:30%; height: 400px"></div> -->
-        </i-row>
+        </Row>
 
-        <!-- <div id="memory-pie" style="float:left; width:30%; height: 400px"></div>
-        <div id="pod-pie" style="float:left; width:30%; height: 400px"></div> -->
         <h3>可调度节点(worker)</h3>
-        <Table  :loading="loading" :Columns="format" :data="scheduleData"></Table>
+        <i-table  :loading="loading" :columns="format" :data="scheduleData"></i-table >
         <br>
         <h3>所有节点</h3>
-        <Table :loading="loading"  :Columns="format" :data="allData"></Table>
+        <i-table  :loading="loading"  :columns="format" :data="allData"></i-table >
         <br>
 
 
         <h3>不可调度节点(master)</h3>
-        <Table :loading="loading"  :Columns="format" :data="unscheduleData"></Table>
+        <i-table  :loading="loading"  :columns="format" :data="unscheduleData"></i-table >
     </div>
 
 </template>
@@ -149,7 +147,7 @@ export default {
                     data: ['使用','剩余']
                 },
                 //饼图中各模块的颜色
-                Color: ['#32dadd', '#b6a2de'],
+                color: ['#32dadd', '#b6a2de'],
                 series : [
                     {
                         name: 'CPU',
@@ -192,7 +190,7 @@ export default {
                     data: ['使用','剩余']
                 },
                 //饼图中各模块的颜色
-                Color: ['#32dadd', '#b6a2de'],
+                color: ['#32dadd', '#b6a2de'],
                 series : [
                     {
                         name: '内存',
@@ -237,10 +235,10 @@ export default {
                     data: ['使用','剩余']
                 },
                 //饼图中各模块的颜色
-                Color: ['#32dadd', '#b6a2de'],
+                color: ['#32dadd', '#b6a2de'],
                 series : [
                     {
-                        name: '内存',
+                        name: 'POD',
                         type: 'pie',
                         radius : '55%',
                         center: ['50%', '60%'],
@@ -265,25 +263,27 @@ export default {
         },
         async refresh(){
             // 从页面共享获取集群
+            
             // let cluster = this.sharedState.clusterName;
+            let that = this
             let cluster = localStorage.getItem('currentCluster')
             console.log("refresh cluster:",cluster)
             if (cluster) {
-                let schedule_data = await this.get_schedule_data(cluster,'schedule')
+                let schedule_data = await that.get_schedule_data(cluster,'schedule')
                 console.log("schedule_data:",schedule_data)
-                this.scheduleData = schedule_data
+                that.scheduleData = schedule_data
                 if(schedule_data){
-                    this.add_chart(schedule_data)
+                    that.add_chart(schedule_data)
                 }
-                let all_data = await this.get_schedule_data(cluster,'all')
+                let all_data = await that.get_schedule_data(cluster,'all')
                 console.log("all_data:",all_data)
-                this.allData = all_data
+                that.allData = all_data
 
-                let unschedule_data = await this.get_schedule_data(cluster,'unschedule')
+                let unschedule_data = await that.get_schedule_data(cluster,'unschedule')
                 console.log("unschedule_data:",unschedule_data)
-                this.unscheduleData = unschedule_data
+                that.unscheduleData = unschedule_data
 
-                this.loading=false
+                that.loading=false
             }
 
         },

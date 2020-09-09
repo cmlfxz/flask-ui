@@ -8,7 +8,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router';
 import Home from  '../components/home.vue';
-import LoginForm from '../components/login.vue';
+import LoginForm from '../components/flask-login.vue';
 import CreateCluster from  '../components/k8s/cluster/createCluster.vue'
 import ClusterList from  '../components/k8s/cluster/clusterList.vue'
 
@@ -57,15 +57,65 @@ const routes = [
             {
                 path: '/k8s/cluster/clusterList',
                 name: 'clusterList',
-                // component:resolve=>{require(['@/components/k8s/cluster/createCluster'],resolve);}
                 component: ClusterList,
             },
             {
                 path: '/k8s/cluster/clusterDetail',
                 name: 'clusterDetail',
                 component: resolve=>{require(['@/components/k8s/cluster/clusterDetail'],resolve);},
-                // component: ClusterList,
             },
+            {
+                path: '/k8s/cluster/nodeDetail',
+                name: 'nodeDetail',
+                component: resolve=>{require(['@/components/k8s/cluster/nodeDetail'],resolve);},
+            },
+            {
+                path: '/k8s/cluster/nodeManage',
+                name: 'nodeManage',
+                component: resolve=>{require(['@/components/k8s/cluster/nodeManage'],resolve);},
+            },
+            {
+                path: '/k8s/cluster/componentStatus',
+                name: 'componentStatus',
+                component: resolve=>{require(['@/components/k8s/cluster/componentStatus'],resolve);},
+            },
+            {
+                path: '/k8s/cluster/eventList',
+                name: 'eventList',
+                component: resolve=>{require(['@/components/k8s/cluster/eventList'],resolve);},
+            },
+            {
+                path: '/k8s/cluster/apiTest',
+                name: 'apiTest',
+                component: resolve=>{require(['@/components/k8s/cluster/apiTest'],resolve);},
+            },
+            //storage
+            {
+                path: '/k8s/storage/storageClass',
+                name: 'storageClass',
+                component: resolve=>{require(['@/components/k8s/storage/storageClass'],resolve);},
+            }, 
+            {
+                path: '/k8s/storage/pv',
+                name: 'pv',
+                component: resolve=>{require(['@/components/k8s/storage/pv'],resolve);},
+            }, 
+            {
+                path: '/k8s/storage/pvc',
+                name: 'pvc',
+                component: resolve=>{require(['@/components/k8s/storage/pvc'],resolve);},
+            }, 
+            // project
+            {
+                path: '/k8s/project/project',
+                name: 'project',
+                component: resolve=>{require(['@/components/k8s/project/project'],resolve);},
+            }, 
+            {
+                path: '/k8s/project/namespace',
+                name: 'namespace',
+                component: resolve=>{require(['@/components/k8s/project/namespace'],resolve);},
+            }, 
         ]
       },
 ]

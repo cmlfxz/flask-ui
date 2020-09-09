@@ -1,59 +1,4 @@
-<style scoped>
-    .layout{
-        border: 1px solid #d7dde4;
-        background: #f5f7f9;
-        position: relative;
-        border-radius: 4px;
-        overflow: hidden;
-    }
-    .layout-header-bar{
-        background: #fff;
-        box-shadow: 0 1px 1px rgba(0,0,0,.1);
-    }
-    .layout-logo-left{
-        width: 90%;
-        height: 30px;
-        background: #5b6270;
-        border-radius: 3px;
-        margin: 15px auto;
-    }
-    .menu-icon{
-        transition: all .3s;
-    }
-    .rotate-icon{
-        transform: rotate(-90deg);
-    }
-    .menu-item span{
-        display: inline-block;
-        overflow: hidden;
-        width: 69px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        vertical-align: bottom;
-        transition: width .2s ease .2s;
-    }
-    .menu-item i{
-        transform: translateX(0px);
-        transition: font-size .2s ease, transform .2s ease;
-        vertical-align: middle;
-        font-size: 16px;
-    }
-    .collapsed-menu span{
-        width: 0px;
-        transition: width .2s ease;
-    }
-    .collapsed-menu i{
-        transform: translateX(5px);
-        transition: font-size .2s ease .2s, transform .2s ease .2s;
-        vertical-align: middle;
-        font-size: 22px;
-    }
-    .header-right {
-        position: absolute;
-        right: 0;
-        margin-right: 25px;
-    }
-</style>
+
 <template>
     <div class="layout">
         <Layout>
@@ -65,30 +10,29 @@
                         <MenuItem name="1-1"><router-link :to="{ name: 'createCluster'}"> 创建集群 </router-link></MenuItem>
                         <MenuItem name="1-2"><router-link :to="{ name: 'clusterList'}"> 集群列表 </router-link></MenuItem>
                         <MenuItem name="1-3"><router-link :to="{ name: 'clusterDetail'}"> 集群详情 </router-link></MenuItem>
+                        <MenuItem name="1-4"><router-link :to="{ name: 'nodeDetail'}"> 节点详情 </router-link></MenuItem>
+                        <MenuItem name="1-5"><router-link :to="{ name: 'nodeManage'}"> 节点管理 </router-link></MenuItem>
+                        <MenuItem name="1-6"><router-link :to="{ name: 'componentStatus'}"> 组件状态 </router-link></MenuItem>
+                        <MenuItem name="1-7"><router-link :to="{ name: 'eventList'}"> 事件列表 </router-link></MenuItem>
+                        <MenuItem name="1-7"><router-link :to="{ name: 'apiTest'}"> API测试 </router-link></MenuItem>
                     </Submenu>
-                    <Submenu name="2">
-                        <template slot="title"><Icon type="ios-people" />用户管理</template>
-                        <MenuItem name="2-1">新增用户</MenuItem>
-                        <MenuItem name="2-2">活跃用户</MenuItem>
+                    <Submenu name="project">
+                        <template slot="title"><Icon type="ios-people" />项目管理</template>
+                        <MenuItem name="project-1" :to="{ name: 'project'}">项目配置</MenuItem>
+                        <MenuItem name="project-2" :to="{ name: 'addNameSpace'}">添加命名空间</MenuItem>
+                        <MenuItem name="project-3" :to="{ name: 'namespace'}">命名空间管理</MenuItem>
+                    </Submenu>
+                    <Submenu name="storage">
+                        <template slot="title"><Icon type="ios-people" />存储管理</template>
+                        <MenuItem name="storage-1" :to="{ name: 'storageClass'}">存储类管理</MenuItem>
+                        <MenuItem name="storage-2" :to="{ name: 'pv'}">PV管理</MenuItem>
+                        <MenuItem name="storage-3" :to="{ name: 'pvc'}">PVC管理</MenuItem>
                     </Submenu>
                 </Menu>
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
-                    <!-- <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon> -->
-                        <div class="header-right">
-                            <Dropdown>
-                                <a href="javascript:void(0)">
-                                    {{ username }}
-                                    <Icon type="ios-arrow-down"></Icon>
-                                </a>
-                                <DropdownMenu slot="list">
-                                    <DropdownItem><a @click="logout">退出</a></DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                        </div>
-                </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '841px'}">
+                    <div style="float: left;margin: 0 20px;" >
                     <!-- 增加header -->
                     <!-- {{ sharedState.clusterName }}
                     {{ sharedState.namespace }} -->
@@ -113,9 +57,24 @@
                                 <Option  :key="namespace" :value="namespace" v-if="namespace === 'sharedState.namespace' "  selected>{{ namespace }}</Option>
                                 <Option :key="namespace" :value="namespace" v-else>{{ namespace }} </Option>
                             </template>
+                            <Option value="all">all</Option>
                         </Select>
                     </template>
-                    
+                    </div>
+                    <!-- <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon> -->
+                    <div class="header-right">
+                        <Dropdown>
+                            <a href="javascript:void(0)">
+                                {{ username }}
+                                <Icon type="ios-arrow-down"></Icon>
+                            </a>
+                            <DropdownMenu slot="list">
+                                <DropdownItem><a @click="logout">退出</a></DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </div>
+                </Header>
+                <Content :style="{margin: '20px', background: '#fff', minHeight: '841px'}">
                     <router-view></router-view>
                 </Content>
             </Layout>
@@ -160,7 +119,6 @@
                 this.$router.push('/login')
             },
             async changeCluster(){
-                // alert('cluster change')
                 let cluster = this.sharedState.clusterName;
                 if(cluster){
                     localStorage.setItem('currentCluster',cluster)
@@ -175,8 +133,9 @@
                         if(namespace_list.length > 0){
                             let currentNameSpace = localStorage.getItem('currentNameSpace')
                             console.log('changeCluster 获取到的缓存命名空间:',currentNameSpace)
-                            if(namespace_list.indexOf(currentNameSpace) != -1){
-                                // 是不是重复设置了？？
+                            // bug && currentNameSpace != 'all all 决定不加入 namespace_list
+                            if(namespace_list.indexOf(currentNameSpace) != -1  || currentNameSpace ==='all'){
+                                // 缓存的ns在ns列表中
                                 store.setNamespace(currentNameSpace)
                             }else {
                                 // 当前集群没有缓存的命名空间怎么办,以列表第一个作为缓存
@@ -341,3 +300,60 @@
         },
     }
 </script>
+
+<style scoped>
+    .layout{
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .layout-header-bar{
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    .layout-logo-left{
+        width: 90%;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        margin: 15px auto;
+    }
+    .menu-icon{
+        transition: all .3s;
+    }
+    .rotate-icon{
+        transform: rotate(-90deg);
+    }
+    .menu-item span{
+        display: inline-block;
+        overflow: hidden;
+        width: 69px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: width .2s ease .2s;
+    }
+    .menu-item i{
+        transform: translateX(0px);
+        transition: font-size .2s ease, transform .2s ease;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    .collapsed-menu span{
+        width: 0px;
+        transition: width .2s ease;
+    }
+    .collapsed-menu i{
+        transform: translateX(5px);
+        transition: font-size .2s ease .2s, transform .2s ease .2s;
+        vertical-align: middle;
+        font-size: 22px;
+    }
+    .header-right {
+        position: absolute;
+        right: 0;
+        margin-right: 25px;
+    }
+</style>

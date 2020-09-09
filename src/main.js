@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
 // import VueRouter from 'vue-router';
 import App from './App.vue';
-import './plugins/element.js';
+// import './plugins/element.js';
 // import  routes  from './router'
 import router from './router'
 
@@ -13,7 +13,7 @@ import 'view-design/dist/styles/iview.css';
 
 Vue.config.productionTip = false
 // Vue.prototype.$message = 
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 Vue.use(ViewUI);
 
 // Vue.use(VueRouter);
