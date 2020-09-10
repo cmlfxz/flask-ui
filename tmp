@@ -1,5 +1,14 @@
 实现了修改数据，停留在当前页 namespace.vue
 
+table 多选 
+        <i-table border stripe ref="namespace_table" @on-selection-change="onSelect" :columns="format" :data="show_list">
+        // 选项改变就会触发
+        // onSelect(selection){
+        //     this.selecteds = selection;
+        //     console.log(this.selecteds)
+        // },
+
+table td加链接： configMap
 json显示
 
                     render: (h, params) => {

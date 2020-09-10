@@ -128,6 +128,26 @@ const routes = [
                 component: resolve=>{require(['@/components/k8s/workload/hpa'],resolve);},
             }, 
             {
+                path: '/k8s/config/configMap',
+                name: 'configMap',
+                component: resolve=>{require(['@/components/k8s/config/configMap'],resolve);},
+            }, 
+            {
+                path: '/k8s/config/configMapDetail',
+                name: 'configMapDetail',
+                component: resolve=>{require(['@/components/k8s/config/configMapDetail'],resolve);},
+            }, 
+            {
+                path: '/k8s/config/secret',
+                name: 'secret',
+                component: resolve=>{require(['@/components/k8s/config/secret'],resolve);},
+            }, 
+            {
+                path: '/k8s/config/secretDetail',
+                name: 'secretDetail',
+                component: resolve=>{require(['@/components/k8s/config/secretDetail'],resolve);},
+            }, 
+            {
                 path: '/k8s/workload/daemonSet',
                 name: 'daemonSet',
                 component: resolve=>{require(['@/components/k8s/workload/daemonSet'],resolve);},

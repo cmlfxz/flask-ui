@@ -26,13 +26,15 @@ export default {
                     title: '最大副本',key: 'maxReplicas'
                 },
                 {
-                    title: '扩展目标',key: 'scaleTargetRef'
+                    title: '扩展目标',key: 'scaleTargetRef',width: 350,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.scaleTargetRef,undefined,4))
+                        ]);
+                    }
                 },
                 {
                     title: '目标CPU占用百分比',key: 'targetCPUUtilizationPercentage',
-                },
-                {
-                    title: '创建时间',key: 'create_time'
                 },
             ],
             show_list: [],

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe ref="namespace_table" @on-selection-change="onSelect" :columns="format" :data="show_list">
+        <i-table border stripe ref="namespace_table" :columns="format" :data="show_list">
             <template slot-scope="{ row, index }" slot="action">
 
                 <Button  v-if="test_inject(index)" type="primary" size="default" @click="cacel_inject(index)">取消注入</Button>
@@ -50,10 +50,10 @@ export default {
     },
     methods: {
         // 选项改变就会触发
-        onSelect(selection){
-            this.selecteds = selection;
-            console.log(this.selecteds)
-        },
+        // onSelect(selection){
+        //     this.selecteds = selection;
+        //     console.log(this.selecteds)
+        // },
         changePage(index) {
             console.log("change this.$refs.page.current",this.$refs.page.current)
             console.log("change this.$refs.page.currentPage",this.$refs.page.currentPage)

@@ -268,13 +268,10 @@
                 // console.log(3)
             },
             async  local_init_cluster_ns(){
-                console.log("local 1")
                 let  cluster_list = await this.getClusterList()
-                console.log("local:",cluster_list)
                 if(cluster_list == null) {
                     console.log('local获取不到集群信息')
                     return
-                    // do anything ?
                 }else{
                     console.log('local获取到集群信息为:',cluster_list)
                     if(cluster_list.length > 0){
@@ -287,7 +284,6 @@
                         
                     }
                 } 
-                console.log("local 2")
                 // 必须是当前缓存的集群
                 let currentCluster = localStorage.getItem('currentCluster')
                 if (currentCluster == '' || currentCluster==null) return
@@ -296,7 +292,6 @@
                 if(namespace_list == null) {
                     console.log('local 获取不到命名空间信息')
                     return
-                    // do anything ?
                 }else{
                     if(namespace_list.length > 0){
                         let currentNameSpace = localStorage.getItem('currentNameSpace')
