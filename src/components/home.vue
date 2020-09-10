@@ -4,29 +4,46 @@
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <!-- <Menu active-name="1" theme="dark" width="auto" :class="menuitemClasses"> -->
-                <Menu :open-names="['1',]" :theme="theme2" width="auto" :class="menuitemClasses">
-                    <Submenu name="1">
+                <Menu :open-names="['service']" :theme="theme2" width="auto" :class="menuitemClasses">
+                    <Submenu name="cluster">
                         <template slot='title'><Icon type="ios-paper" />集群管理</template>
-                        <MenuItem name="1-1"><router-link :to="{ name: 'createCluster'}"> 创建集群 </router-link></MenuItem>
-                        <MenuItem name="1-2"><router-link :to="{ name: 'clusterList'}"> 集群列表 </router-link></MenuItem>
-                        <MenuItem name="1-3"><router-link :to="{ name: 'clusterDetail'}"> 集群详情 </router-link></MenuItem>
-                        <MenuItem name="1-4"><router-link :to="{ name: 'nodeDetail'}"> 节点详情 </router-link></MenuItem>
-                        <MenuItem name="1-5"><router-link :to="{ name: 'nodeManage'}"> 节点管理 </router-link></MenuItem>
-                        <MenuItem name="1-6"><router-link :to="{ name: 'componentStatus'}"> 组件状态 </router-link></MenuItem>
-                        <MenuItem name="1-7"><router-link :to="{ name: 'eventList'}"> 事件列表 </router-link></MenuItem>
-                        <MenuItem name="1-7"><router-link :to="{ name: 'apiTest'}"> API测试 </router-link></MenuItem>
+                        <MenuItem name="cluster-1"><router-link :to="{ name: 'createCluster'}"> 创建集群 </router-link></MenuItem>
+                        <MenuItem name="cluster-2"><router-link :to="{ name: 'clusterList'}"> 集群列表 </router-link></MenuItem>
+                        <MenuItem name="cluster-3"><router-link :to="{ name: 'clusterDetail'}"> 集群详情 </router-link></MenuItem>
+                        <MenuItem name="cluster-4"><router-link :to="{ name: 'nodeDetail'}"> 节点详情 </router-link></MenuItem>
+                        <MenuItem name="cluster-5"><router-link :to="{ name: 'nodeManage'}"> 节点管理 </router-link></MenuItem>
+                        <MenuItem name="cluster-6"><router-link :to="{ name: 'componentStatus'}"> 组件状态 </router-link></MenuItem>
+                        <MenuItem name="cluster-7"><router-link :to="{ name: 'eventList'}"> 事件列表 </router-link></MenuItem>
+                        <MenuItem name="cluster-8"><router-link :to="{ name: 'apiTest'}"> API测试 </router-link></MenuItem>
                     </Submenu>
                     <Submenu name="project">
                         <template slot="title"><Icon type="ios-people" />项目管理</template>
                         <MenuItem name="project-1" :to="{ name: 'project'}">项目配置</MenuItem>
-                        <MenuItem name="project-2" :to="{ name: 'addNameSpace'}">添加命名空间</MenuItem>
+                        <MenuItem name="project-2" :to="{ name: 'createNamespace'}">添加命名空间</MenuItem>
                         <MenuItem name="project-3" :to="{ name: 'namespace'}">命名空间管理</MenuItem>
+                    </Submenu>
+                    <Submenu name="service">
+                        <template slot="title"><Icon type="ios-people" />服务管理</template>
+                        <MenuItem name="service-1" :to="{ name: 'gateway'}">gateway管理</MenuItem>
+                        <MenuItem name="service-2" :to="{ name: 'ingress'}">ingress管理</MenuItem>
+                        <MenuItem name="service-3" :to="{ name: 'service'}">service管理</MenuItem>
+                        <MenuItem name="service-4" :to="{ name: 'virtualService'}">虚服务管理</MenuItem>
+                        <MenuItem name="service-5" :to="{ name: 'destinationRule'}">路由规则管理</MenuItem>
                     </Submenu>
                     <Submenu name="storage">
                         <template slot="title"><Icon type="ios-people" />存储管理</template>
                         <MenuItem name="storage-1" :to="{ name: 'storageClass'}">存储类管理</MenuItem>
                         <MenuItem name="storage-2" :to="{ name: 'pv'}">PV管理</MenuItem>
                         <MenuItem name="storage-3" :to="{ name: 'pvc'}">PVC管理</MenuItem>
+                    </Submenu>
+                    <Submenu name="task">
+                        <template slot="title"><Icon type="ios-people" />任务管理</template>
+                        <MenuItem name="task-1" :to="{ name: 'job'}">批处理任务</MenuItem>
+                        <MenuItem name="task-2" :to="{ name: 'cronjob'}">定时任务</MenuItem>
+                    </Submenu>
+                    <Submenu name="setting">
+                        <template slot="title"><Icon type="ios-people" />系统配置</template>
+                        <MenuItem name="setting-1" :to="{ name: 'env'}">环境管理</MenuItem>
                     </Submenu>
                 </Menu>
             </Sider>

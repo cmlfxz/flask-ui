@@ -2,7 +2,7 @@
     <div>
         <i-table border stripe  :columns="format" :data="show_list">
             <template slot-scope="{ row, index }" slot="action">
-                <Button type="error" style="margin-bottom: 5px "  @click="del_xx(index)">删除</Button>
+                <Button type="error" style="margin-bottom: 5px "  @click="del_ingress(index)">删除</Button>
             </template>
         </i-table >
     </div>
@@ -23,19 +23,26 @@ export default {
                     title: '命名空间',key: 'namespace'
                 },
                 {
-                    title: '可调度',key: 'schedulable',
+                    title: 'selector',key: 'selector',
                 },
                 {
-                    title: '节点信息',key: 'node_info',
+                    title: '域名列表',key: 'domain_list',
                 },
                 {
-                    title: '容忍',key: 'taints',
+                    title: 'rule',key: 'rule',width:400,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.rule,undefined,4))
+                        ]);
+                    }
                 },
                 {
-                    title: '标签',key: 'labels',
-                },
-                {
-                    title: 'pod_cidr',key: 'pod_cidr'
+                    title: 'tls',key: 'tls',width:400,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.tls,undefined,4))
+                        ]);
+                    }
                 },
                 {
                     title: '创建时间',key: 'create_time'
@@ -48,10 +55,13 @@ export default {
         }
     },
     methods: {
+        del_ingress(index){
+            console.log(index)
+        },
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_xx_list" 
+            let url = 'http://flask-ingress:8000' + "/k8s"+"/get_ingress_list" 
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

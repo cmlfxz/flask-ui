@@ -112,10 +112,43 @@ const routes = [
                 component: resolve=>{require(['@/components/k8s/project/project'],resolve);},
             }, 
             {
+                path: '/k8s/project/createNamespace',
+                name: 'createNamespace',
+                component: resolve=>{require(['@/components/k8s/project/createNamespace'],resolve);},
+            }, 
+            {
                 path: '/k8s/project/namespace',
                 name: 'namespace',
                 component: resolve=>{require(['@/components/k8s/project/namespace'],resolve);},
             }, 
+            // servie 
+            {
+                path: '/k8s/istio/gateway',
+                name: 'gateway',
+                component: resolve=>{require(['@/components/k8s/istio/gateway'],resolve);},
+            }, 
+            {
+                path: '/k8s/service/ingress',
+                name: 'ingress',
+                component: resolve=>{require(['@/components/k8s/service/ingress'],resolve);},
+            }, 
+            // task
+            {
+                path: '/k8s/task/job',
+                name: 'job',
+                component: resolve=>{require(['@/components/k8s/task/job'],resolve);},
+            }, 
+            {
+                path: '/k8s/task/cronjob',
+                name: 'cronjob',
+                component: resolve=>{require(['@/components/k8s/task/cronjob'],resolve);},
+            }, 
+            // setting
+            {
+                path: '/setting/env',
+                name: 'env',
+                component: resolve=>{require(['@/components/setting/env'],resolve);},
+            },  
         ]
       },
 ]

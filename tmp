@@ -1,0 +1,9 @@
+实现了修改数据，停留在当前页 namespace.vue
+
+json显示
+
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.node_info,undefined,4))
+                        ]);
+                    }
