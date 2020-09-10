@@ -80,10 +80,11 @@ export default {
                     align: 'center'
                 },
                 {
-                    title: '名字',key: 'name',width: 200,
+                    title: '名字',key: 'name',width: 300,
                 },
                 {
-                    title: 'pvc',key: 'pvc',width:200,
+                    title: 'pvc',key: 'pvc'
+                    // ,width:200,
                 },
 
                 {
@@ -101,7 +102,7 @@ export default {
                     title: '存储类名',key: 'storage_class_name',width:200,
                 },
                 {
-                    title: 'source',key: 'source',
+                    title: 'source',key: 'source',width: 500,
                     // render: (h, params) => {
                     //     return h('div', [
                     //         h('pre', JSON.stringify(params.row.source,undefined,4))
@@ -346,6 +347,10 @@ export default {
     }
 }
 </script>
-<style scoped>
-
+<style>
+pre{
+    white-space: pre-wrap!important;
+    word-wrap: break-word!important;
+    *white-space:normal!important;
+}
 </style>

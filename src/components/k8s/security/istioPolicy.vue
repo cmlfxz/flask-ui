@@ -2,7 +2,7 @@
     <div>
         <i-table border stripe  :columns="format" :data="show_list" height="840">
             <template slot-scope="{ row, index }" slot="action">
-                <Button type="error" style="margin-bottom: 5px "  @click="del_ingress(index)">删除</Button>
+                <Button type="error" style="margin-bottom: 5px "  @click="del_istio_policy(index)">删除</Button>
             </template>
         </i-table >
     </div>
@@ -16,6 +16,7 @@ export default {
     data() {
         return {
             format: [
+                
                 {
                     title: '名字',key: 'name'
                 },
@@ -23,36 +24,25 @@ export default {
                     title: '命名空间',key: 'namespace'
                 },
                 {
-                    title: '域名列表',key: 'domain_list',
-                },
-                {
-                    title: 'rule',key: 'rule',width:500,
+                    title: '详情',key: 'spec',width: 600,
                     render: (h, params) => {
                         return h('div', [
-                            h('pre', JSON.stringify(params.row.rule,undefined,4))
-                        ]);
-                    }
-                },
-                {
-                    title: 'tls',key: 'tls',width:500,
-                    render: (h, params) => {
-                        return h('div', [
-                            h('pre', JSON.stringify(params.row.tls,undefined,4))
+                            h('pre', JSON.stringify(params.row.spec,undefined,4))
                         ]);
                     }
                 },
                 {
                     title: '创建时间',key: 'create_time'
                 },
-                {
-                    title: '操作',slot: 'action',width: 100,align: 'center'
-                }
+                // {
+                //     title: '操作',slot: 'action',width: 100,align: 'center'
+                // }
             ],
             show_list: [],
         }
     },
     methods: {
-        del_ingress(index){
+        del_istio_policy(index){
             // console.log(index)
             let name = this.show_list[index].name
             let result = confirm("确定要删除"+name+"服务吗?")
@@ -65,7 +55,7 @@ export default {
                 return
             }
             let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_ingress" 
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_istio_policy" 
             let method='post'
             if(cluster){
                 axios({
@@ -73,7 +63,7 @@ export default {
                 }).then( (response) => {
                     let info = JSON.stringify(response.data)
                     if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除ingress成功')
+                        this.$Message.success('删除istio_policy成功')
                         this.refresh()
                     }else {
                         alert(info)
@@ -86,7 +76,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_ingress_list" 
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_istio_policy_list" 
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

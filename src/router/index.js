@@ -121,6 +121,32 @@ const routes = [
                 name: 'namespace',
                 component: resolve=>{require(['@/components/k8s/project/namespace'],resolve);},
             }, 
+            // workload
+            {
+                path: '/k8s/workload/hpa',
+                name: 'hpa',
+                component: resolve=>{require(['@/components/k8s/workload/hpa'],resolve);},
+            }, 
+            {
+                path: '/k8s/workload/daemonSet',
+                name: 'daemonSet',
+                component: resolve=>{require(['@/components/k8s/workload/daemonSet'],resolve);},
+            }, 
+            {
+                path: '/k8s/workload/statefulSet',
+                name: 'statefulSet',
+                component: resolve=>{require(['@/components/k8s/workload/statefulSet'],resolve);},
+            }, 
+            {
+                path: '/k8s/security/networkPolicy',
+                name: 'networkPolicy',
+                component: resolve=>{require(['@/components/k8s/security/networkPolicy'],resolve);},
+            }, 
+            {
+                path: '/k8s/security/istioPolicy',
+                name: 'istioPolicy',
+                component: resolve=>{require(['@/components/k8s/security/istioPolicy'],resolve);},
+            }, 
             // servie 
             {
                 path: '/k8s/istio/gateway',
@@ -128,9 +154,24 @@ const routes = [
                 component: resolve=>{require(['@/components/k8s/istio/gateway'],resolve);},
             }, 
             {
+                path: '/k8s/istio/virtualService',
+                name: 'virtualService',
+                component: resolve=>{require(['@/components/k8s/istio/virtualService'],resolve);},
+            }, 
+            {
+                path: '/k8s/istio/destinationRule',
+                name: 'destinationRule',
+                component: resolve=>{require(['@/components/k8s/istio/destinationRule'],resolve);},
+            }, 
+            {
                 path: '/k8s/service/ingress',
                 name: 'ingress',
                 component: resolve=>{require(['@/components/k8s/service/ingress'],resolve);},
+            }, 
+            {
+                path: '/k8s/service/service',
+                name: 'service',
+                component: resolve=>{require(['@/components/k8s/service/service'],resolve);},
             }, 
             // task
             {

@@ -4,7 +4,7 @@
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <!-- <Menu active-name="1" theme="dark" width="auto" :class="menuitemClasses"> -->
-                <Menu :open-names="['service']" :theme="theme2" width="auto" :class="menuitemClasses">
+                <Menu :open-names="['app']" :theme="theme2" width="auto" :class="menuitemClasses">
                     <Submenu name="cluster">
                         <template slot='title'><Icon type="ios-paper" />集群管理</template>
                         <MenuItem name="cluster-1"><router-link :to="{ name: 'createCluster'}"> 创建集群 </router-link></MenuItem>
@@ -21,6 +21,19 @@
                         <MenuItem name="project-1" :to="{ name: 'project'}">项目配置</MenuItem>
                         <MenuItem name="project-2" :to="{ name: 'createNamespace'}">添加命名空间</MenuItem>
                         <MenuItem name="project-3" :to="{ name: 'namespace'}">命名空间管理</MenuItem>
+                    </Submenu>
+                    <Submenu name="app">
+                        <template slot="title"><Icon type="ios-people" />应用管理</template>
+                        <MenuItem name="app-1" :to="{ name: 'scan'}">项目速览</MenuItem>
+                        <MenuItem name="app-2" :to="{ name: 'deployment' }">部署管理</MenuItem>
+                        <MenuItem name="app-3" :to="{ name: 'pod'}">Pod管理</MenuItem>
+                        <MenuItem name="app-10" :to="{ name: 'hpa'}">hpa管理</MenuItem>
+                        <MenuItem name="app-4" :to="{ name: 'configMap'}">配置管理</MenuItem>
+                        <MenuItem name="app-5" :to="{ name: 'secret'}">保密字典</MenuItem>
+                        <MenuItem name="app-6" :to="{ name: 'daemonSet'}">守护应用</MenuItem>
+                        <MenuItem name="app-7" :to="{ name: 'statefulSet'}">有状态应用</MenuItem>
+                        <MenuItem name="app-8" :to="{ name: 'networkPolicy'}">k8s网络策略</MenuItem>
+                        <MenuItem name="app-9" :to="{ name: 'istioPolicy'}">isito网络策略</MenuItem>
                     </Submenu>
                     <Submenu name="service">
                         <template slot="title"><Icon type="ios-people" />服务管理</template>
@@ -58,7 +71,7 @@
                     <template v-if="sharedState.clusterList.length != 0" >
                         <!-- model应该绑定啥?  全局变量-->
                         <span>集群: </span>
-                        <Select  v-model="sharedState.clusterName" style="width:200px" @on-change="changeCluster()">
+                        <Select  v-model="sharedState.clusterName" style="width:200px;margin-right: 10px" @on-change="changeCluster()">
                             <template v-for="cluster in sharedState.clusterList" >
                                 <!-- state的集群名字和localStorage的名字相等 ，则选上 -->
                                 <Option  :key="cluster" :value="cluster" v-if="cluster === 'sharedState.clusterName' "  selected>{{ cluster }}</Option>
@@ -68,7 +81,7 @@
                     </template>
                     <template v-if="sharedState.namespaceList.length != 0" >
                         <span>命名空间: </span>
-                        <Select v-model="sharedState.namespace" style="width:200px" @on-change="changeNamespace()">
+                        <Select v-model="sharedState.namespace" style="width:300px" @on-change="changeNamespace()">
                             <template v-for="namespace in sharedState.namespaceList" >
                                 <!-- state的集群名字和localStorage的名字相等 ，则选上 -->
                                 <Option  :key="namespace" :value="namespace" v-if="namespace === 'sharedState.namespace' "  selected>{{ namespace }}</Option>

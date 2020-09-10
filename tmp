@@ -7,3 +7,43 @@ json显示
                             h('pre', JSON.stringify(params.row.node_info,undefined,4))
                         ]);
                     }
+
+删除：
+        del_XX(index){
+            // console.log(index)
+            let name = this.show_list[index].name
+            let result = confirm("确定要删除"+name+"服务吗?")
+            if(result == false) return 
+            let cluster = localStorage.getItem('currentCluster')
+            let namespace = localStorage.getItem('currentNameSpace')
+            let headers = {"cluster_name": cluster }
+            if (namespace =='' || namespace == 'all'){
+                alert("去选择具体的namespace")
+                return
+            }
+            let data = JSON.stringify({"namespace":namespace,"name":name})
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_XX" 
+            let method='post'
+            if(cluster){
+                axios({
+                    url:url,headers: headers,data:data,method:method
+                }).then( (response) => {
+                    let info = JSON.stringify(response.data)
+                    if(info.indexOf('ok') != -1) {
+                        this.$Message.success('删除ingress成功')
+                        this.refresh()
+                    }else {
+                        alert(info)
+                    }
+                }).catch(function (error){
+                    console.log(error)
+                })
+            }
+        },
+    
+pre：换行
+    pre{
+        white-space: pre-wrap!important;
+        word-wrap: break-word!important;
+        *white-space:normal!important;
+    }
