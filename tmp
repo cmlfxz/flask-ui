@@ -1,7 +1,9 @@
 实现了修改数据，停留在当前页 namespace.vue
 
-table 多选 
-        <i-table border stripe ref="namespace_table" @on-selection-change="onSelect" :columns="format" :data="show_list">
+table 多选  pv实现了
+        1、通过给 columns 数据设置一项，指定 type: 'selection'，即可自动开启多选功能。
+        2、 <i-table border stripe ref="namespace_table" @on-selection-change="onSelect" :columns="format" :data="show_list">
+        3、 
         // 选项改变就会触发
         // onSelect(selection){
         //     this.selecteds = selection;

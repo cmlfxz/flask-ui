@@ -47,12 +47,6 @@ export default {
                         ]);
                     }
                 },
-                // {
-                //     title: '容器',key: 'containers',
-                // },
-                // {
-                //     title: 'host_network',key: 'host_network'
-                // },
                 {
                     title: '创建时间',key: 'create_time'
                 },

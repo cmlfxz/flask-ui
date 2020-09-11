@@ -123,6 +123,31 @@ const routes = [
             }, 
             // workload
             {
+                path: '/k8s/workload/deployment',
+                name: 'deployment',
+                component: resolve=>{require(['@/components/k8s/workload/deployment'],resolve);},
+            }, 
+            {
+                path: '/k8s/workload/deploymentDetail',
+                name: 'deploymentDetail',
+                component: resolve=>{require(['@/components/k8s/workload/deploymentDetail'],resolve);},
+            }, 
+            {
+                path: '/k8s/workload/scan',
+                name: 'scan',
+                component: resolve=>{require(['@/components/k8s/workload/scan'],resolve);},
+            }, 
+            {
+                path: '/k8s/workload/pod',
+                name: 'pod',
+                component: resolve=>{require(['@/components/k8s/workload/pod'],resolve);},
+            }, 
+            {
+                path: '/k8s/workload/podDetail',
+                name: 'podDetail',
+                component: resolve=>{require(['@/components/k8s/workload/podDetail'],resolve);},
+            }, 
+            {
                 path: '/k8s/workload/hpa',
                 name: 'hpa',
                 component: resolve=>{require(['@/components/k8s/workload/hpa'],resolve);},
