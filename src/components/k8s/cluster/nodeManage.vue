@@ -2,8 +2,8 @@
     <div>
         <i-table  :columns="format" :data="node_list">
             <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary"  style="margin-bottom: 5px " @click="add_taint(index)">添加容忍</Button>
-                <Button type="error" style="margin-bottom: 5px "  @click="del_taint(index)">删除容忍</Button>
+                <Button type="primary"  style="margin-bottom: 5px " @click="add_taint(index)">增加污点</Button>
+                <Button type="error" style="margin-bottom: 5px "  @click="del_taint(index)">删除污点</Button>
                 <Button type="primary" style="margin-bottom: 5px " @click="add_label(index)">打标签</Button>
                 <Button type="error"   @click="del_label(index)">删标签</Button> 
             </template>
@@ -118,7 +118,7 @@ export default {
                     }
                 },
                 {
-                    title: '容忍',key: 'taints',
+                    title: '污点',key: 'taints',
                     width: 400,
                     render: (h, params) => {
                         return h('div', [
