@@ -3,11 +3,11 @@
         <div style="margin-bottom: 10px">
             <i-button type="primary" style="margin-right: 10px" @click="btn_update_replicas">扩缩容</i-button>
             <i-button type="primary" style="margin-right: 10px"  @click="btn_add_toleration">添加容忍</i-button>
-            <!-- <i-button type="error" style="margin-right: 10px"  @click="btn_del_toleration">删除容忍</i-button>
+            <i-button type="error" style="margin-right: 10px"  @click="btn_del_toleration">删除容忍</i-button>
             <i-button type="primary" style="margin-right: 10px" @click="btn_add_node_affinity">添加节点亲和性</i-button>
             <i-button type="error" style="margin-right: 10px"  @click="btn_del_node_affinity">删除节点亲和性</i-button>
-            <i-button type="error" style="margin-right: 10px"  @click="btn_add_pod_anti_affinity">添加Pod互斥调度</i-button>
-            <i-button type="error" style="margin-right: 10px"  @click="btn_del_pod_anti_affinity">删除Pod互斥调度</i-button> -->
+            <i-button type="primary" style="margin-right: 10px"  @click="btn_add_pod_anti_affinity">添加Pod互斥调度</i-button>
+            <i-button type="error" style="margin-right: 10px"  @click="btn_del_pod_anti_affinity">删除Pod互斥调度</i-button>
             <i-button type="error" style="margin-right: 10px"  @click="btn_del_deploy">删除Deploy</i-button>
 
         </div>
@@ -25,7 +25,7 @@
                 {{ deploy_name }}<span>增加容忍</span>
             </p>
             <div style="">
-                <Form :ref="toleration" :model="toleration" :rules="toleration_rules" label-position="left"  :label-width="150">
+                <Form ref="toleration" :model="toleration" :rules="toleration_rules" label-position="left"  :label-width="150">
                     <Form-Item label="选择容忍效果" prop="effect">
                         <Select v-model="toleration.effect">
                             <Option v-for="effect in toleration_effect_list" :key="effect" :value="effect">{{ effect }}</Option>
@@ -56,6 +56,113 @@
                 <Button type="primary" size="large"  @click="submit_add_toleration">提交</Button>
             </div>
         </Modal>
+        <!-- 删除容忍模态框 -->
+        <Modal v-model="show_del_toleration_modal" width="800">
+            <p slot="header" style="color:#f60;text-align:center;">
+                {{ deploy_name }}<span>删除容忍</span>
+            </p>
+            <div style="">
+                <Form>
+                    <Form-Item >
+                        <Radio-Group v-model="toleration_del_index" vertical>
+                            <Radio v-for="(toleration,index) in tolerations" :label="index" :key="index">{{ toleration }}</Radio>
+                        </Radio-Group>
+                    </Form-Item> 
+                </Form> 
+            </div>
+            <div slot="footer">
+                <Button type="primary" size="large"  @click="submit_del_toleration">提交</Button>
+            </div>
+        </Modal>
+        <!-- 添加节点亲和性模态框 -->
+        <Modal v-model="show_add_node_affinity_modal" width="800">
+            <p slot="header" style="color:#f60;text-align:center">
+                {{ deploy_name }}<span>添加节点亲和性</span>
+            </p>
+            <div style="">
+                <Form ref="node_affinity" :model="node_affinity" :rules="node_affinity_rules" label-position="left"  :label-width="150">
+                    <Form-Item label="选择亲和性类型" prop="type">
+                        <Select v-model="node_affinity.type">
+                            <Option v-for="type in node_affinity_type_list" :key="type" :value="type">{{ type }}</Option>
+                        </Select>
+                    </Form-Item> 
+                    <Form-Item label="选择标签选择器类型" prop="nodeSelector">
+                        <Select v-model="node_affinity.nodeSelector">
+                            <Option v-for="nodeSelector in node_affinity_node_selector_list" :key="nodeSelector" :value="nodeSelector">{{ nodeSelector }}</Option>
+                        </Select>
+                    </Form-Item> 
+                    <Form-Item label="key:"  prop="key">
+                        <Input type="text"  v-model="node_affinity.key" />
+                    </Form-Item>
+                    <Form-Item label="选择operator:" prop="operator">
+                        <Select v-model="node_affinity.operator">
+                            <Option v-for="operator in node_affinity_operator_list" :key="operator" :value="operator">{{ operator }}</Option>
+                        </Select>
+                    </Form-Item> 
+                    <Form-Item label="value:" prop="value" >
+                        <Input type="text" v-if="node_affinity.operator!='Exists' && node_affinity.operator!='DoesNotExist' " v-model="node_affinity.value"  />
+                        <Input type="text" v-else placeholder="operator为Exists/DoesNotExist不需要value"  disabled/>
+                    </Form-Item>
+                    <Form-Item label="weight:" prop="weight">
+                        <Input type="number" v-if="node_affinity.type=='preferred'" v-model="node_affinity.weight"  />
+                        <Input type="number" v-else placeholder="preferred亲和类型才需要填写"  disabled  />
+                    </Form-Item>
+                </Form> 
+               
+            </div>
+            <div slot="footer">
+                 <p style="text-align: left">说明1: matchFields:匹配field-selector 例如:metadata.name: 192.168.11.54</p>
+                 <p style="text-align: left">说明2: value: must be specified single value when `operator` is 'Lt' or 'Gt'"</p>
+                 <p style="text-align: left">说明3: values: Required value: must be only one value when `operator` is 'In' or 'NotIn' for node field selector</p>
+                 <p style="text-align: left">说明4: key: Invalid value: "server": not a valid field selector key"</p>
+                 <!-- submit_add_node_affinity('node_affinity')这里是表单的 ref值-->
+                <Button type="primary" size="large"  @click="submit_add_node_affinity('node_affinity')">提交</Button>
+            </div>
+        </Modal>
+        <!-- 添加POD互斥模态框 -->
+        <Modal v-model="show_add_pod_anti_affinity_modal" width="800">
+            <p slot="header" style="color:#f60;text-align:center">
+                {{ deploy_name }}<span>添加POD互斥调度</span>
+            </p>
+            <div style="">
+                <Form ref="pod_anti_affinity" :model="pod_anti_affinity" :rules="pod_anti_affinity_rules" label-position="left"  :label-width="150">
+                    <Form-Item label="选择互斥类型" prop="type">
+                        <Select v-model="pod_anti_affinity.type">
+                            <Option v-for="type in pod_anti_affinity_type_list" :key="type" :value="type">{{ type }}</Option>
+                        </Select>
+                    </Form-Item> 
+                    <Form-Item label="选择标签选择器类型" prop="labelSelector">
+                        <Select v-model="pod_anti_affinity.labelSelector">
+                            <Option v-for="labelSelector in pod_anti_affinity_label_selector_list" :key="labelSelector" :value="labelSelector">{{ labelSelector }}</Option>
+                        </Select>
+                    </Form-Item> 
+                    <Form-Item label="key:"  prop="key">
+                        <Input type="text"  v-model="pod_anti_affinity.key" />
+                    </Form-Item>
+                    <Form-Item label="选择operator:" prop="operator">
+                        <Select v-model="pod_anti_affinity.operator">
+                            <Option v-for="operator in pod_anti_affinity_operator_list" :key="operator" :value="operator">{{ operator }}</Option>
+                        </Select>
+                    </Form-Item> 
+                    <Form-Item label="value:" prop="value" >
+                        <Input type="text" v-if="pod_anti_affinity.operator!='Exists' && pod_anti_affinity.operator!='DoesNotExist' " v-model="pod_anti_affinity.value"  />
+                        <Input type="text" v-else placeholder="operator为Exists/DoesNotExist不需要value"  disabled/>
+                    </Form-Item>
+                    <Form-Item label="weight:" prop="weight">
+                        <Input type="number" v-if="pod_anti_affinity.type=='preferred'" v-model="pod_anti_affinity.weight"  />
+                        <Input type="number" v-else placeholder="preferred互斥类型才需要填写"  disabled  />
+                    </Form-Item>
+                    <Form-Item label="topologyKey:"  prop="topologyKey">
+                        <Input type="text"  v-model="pod_anti_affinity.topologyKey" />
+                    </Form-Item>
+                </Form> 
+               
+            </div>
+            <div slot="footer">
+                <p style="text-align: left">说明1: key value 一般填写 deployment的selector 或者label的键值对</p>
+                <Button type="primary" size="large"  @click="submit_add_pod_anti_affinity('pod_anti_affinity')">提交</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -65,6 +172,13 @@ import axios from 'axios';
 
 export default {
     data() {
+        const validateWeight = (rule,value,callback) => {
+            if(value <1 || value > 100) {
+                callback(new Error('请输入1-100整数'))
+            }else{
+                callback();
+            }
+        };
         return {
             format: [
                 {
@@ -131,6 +245,12 @@ export default {
             selecteds: [],
             // 添加容忍模态框
             show_add_toleration_modal: false,
+            show_del_toleration_modal: false,
+            show_add_node_affinity_modal: false,
+            show_del_node_affinity_modal: false,
+            show_add_pod_anti_affinity_modal: false,
+            show_del_pod_anti_affinity_modal: false,
+
             toleration:{
                 effect: 'NoSchedule',
                 key: '',
@@ -143,6 +263,55 @@ export default {
             toleration_rules: {
 
             },
+            // 删除容忍
+            tolerations: null,
+            toleration_del_index: null,
+
+            // 添加节点亲和
+            node_affinity:{
+                type: 'preferred',
+                labelSelector: 'matchExpressions',
+                key: '',
+                operator: 'In',
+                value: '',
+                weight: 1,
+            },
+            node_affinity_type_list:['preferred','required'],
+            node_affinity_node_selector_list:['matchExpressions','matchFields'],
+            node_affinity_operator_list:['In','NotIn','Exists','DoesNotExist','Gt','Lt'],
+            
+            node_affinity_rules:{
+                key: [
+                    {required: true,message:'请输入key',trigger: 'blur'}
+                ],
+                weight: [
+                    {trigger:'blur',transform(value){return Number(value);},validator: validateWeight}
+                ],
+            },
+
+            // pod互斥调度
+            // 添加节点亲和
+            pod_anti_affinity:{
+                type: 'preferred',
+                labelSelector: 'matchExpressions',
+                key: '',
+                operator: 'In',
+                value: '',
+                weight: 1,
+                topologyKey: "kubernetes.io/hostname",
+            },
+            pod_anti_affinity_type_list:['preferred','required'],
+            pod_anti_affinity_label_selector_list:['matchExpressions','matchLabels'],
+            pod_anti_affinity_operator_list:['In','NotIn','Exists','DoesNotExist'],
+            
+            pod_anti_affinity_rules:{
+                key: [
+                    {required: true,message:'请输入key',trigger: 'blur'}
+                ],
+                weight: [
+                    {trigger:'blur',transform(value){return Number(value);},validator: validateWeight}
+                ],
+            },
             // 需不需呢
             deploy_name: '',
 
@@ -150,7 +319,254 @@ export default {
         }
     },
     methods: {
+        // 删除POD互斥
+        delete_pod_anti_affinity(deploy_name){
+            let cluster = localStorage.getItem('currentCluster')
+            let namespace = localStorage.getItem('currentNameSpace')
+            let headers = {"cluster_name":cluster}
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let action = "delete_pod_anti_affinity"
+            let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action})
+            console.log("删除POD互斥调度data: ",data)
+            if(cluster){
+                axios({
+                    method: 'post', url: url,headers: headers,data: data,
+                }).then( (response) => {
+                    console.log(response.data)
+                    let info = JSON.stringify(response.data)
+                    if(info.indexOf('ok') != -1) {
+                        this.$Message.success('删除POD互斥调度成功')
+                        this.refresh()
+                    }else {
+                        alert(info)
+                    }
+                }).catch(function (error){
+                    alert(error);
+                })
+            }
+        },
+        // 删除POD互斥调度点击事件
+        btn_del_pod_anti_affinity(){
+            if(!this.check()) return
+            let select_count = this.selecteds.length
+            if (select_count > 1){
+                this.$Message.error("此操作暂时不能批量")
+                return false
+            }
 
+            let  name = this.selecteds[0].name
+            // 为后续操作准备好deployment的名称
+            this.deploy_name = name
+            let result = confirm("确定要删除"+name+"POD互斥调度吗?")
+            if(result == false) return false
+            this.delete_pod_anti_affinity(name)
+        },
+        // 提交pod互斥事件
+        submit_add_pod_anti_affinity(name){
+            let validate = false
+            this.$refs[name].validate((valid) => {
+                if (valid) {
+                    // this.$Message.success('表单数据验证成功!');
+                    validate = true
+                    console.log('表单数据验证成功!')
+                } else {
+                    this.$Message.error('表单数据验证失败!');
+                    validate = false
+                }
+            })
+            if(!validate) return
+            let cluster = localStorage.getItem('currentCluster')
+            let namespace = localStorage.getItem('currentNameSpace')
+            let headers = {"cluster_name":cluster}
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let pod_anti_affinity = this.pod_anti_affinity
+            let action = "add_pod_anti_affinity"
+            let deploy_name = this.deploy_name
+            let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action,"pod_anti_affinity":pod_anti_affinity})
+            console.log("添加节点亲和data: ",data)
+            if(cluster){
+                axios({
+                    method: 'post', url: url,headers: headers,data: data,
+                }).then( (response) => {
+                    console.log(response.data)
+                    let info = JSON.stringify(response.data)
+                    if(info.indexOf('ok') != -1) {
+                        this.$Message.success('添加POD互斥调度成功')
+                        this.show_add_pod_anti_affinity_modal = false
+                        this.refresh()
+                    }else {
+                        alert(info)
+                    }
+                }).catch(function (error){
+                    alert(error);
+                })
+            }
+        },
+        // 点击添加pod反亲和性事件
+        btn_add_pod_anti_affinity(){
+            if(!this.check()) return
+            let select_count = this.selecteds.length
+            if (select_count > 1){
+                this.$Message.error("此操作暂时不能批量")
+                return false
+            }
+            let  name = this.selecteds[0].name
+            // 为后续操作准备好deployment的名称
+            this.deploy_name = name
+            // 显示模态框
+            this.show_add_pod_anti_affinity_modal = true
+        },
+        // 删除节点亲和性
+        delete_node_affinity(deploy_name){
+            let cluster = localStorage.getItem('currentCluster')
+            let namespace = localStorage.getItem('currentNameSpace')
+            let headers = {"cluster_name":cluster}
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let action = "delete_node_affinity"
+            let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action})
+            console.log("删除节点亲和data: ",data)
+            if(cluster){
+                axios({
+                    method: 'post', url: url,headers: headers,data: data,
+                }).then( (response) => {
+                    console.log(response.data)
+                    let info = JSON.stringify(response.data)
+                    if(info.indexOf('ok') != -1) {
+                        this.$Message.success('删除节点亲和成功')
+                        this.refresh()
+                    }else {
+                        alert(info)
+                    }
+                }).catch(function (error){
+                    alert(error);
+                })
+            }
+        },
+        // 点击删除节点亲和性事件
+        btn_del_node_affinity(){
+            if(!this.check()) return
+            let select_count = this.selecteds.length
+            if (select_count > 1){
+                this.$Message.error("此操作暂时不能批量")
+                return false
+            }
+
+            let  name = this.selecteds[0].name
+            // 为后续操作准备好deployment的名称
+            this.deploy_name = name
+            let result = confirm("确定要删除"+name+"节点亲和性吗?")
+            if(result == false) return false
+            this.delete_node_affinity(name)
+        },
+        // 提交节点亲和事件
+        submit_add_node_affinity(name){
+            // 验证表单
+            // console.log("name:",name)
+            // console.log("refs:",this.$refs)
+            // console.log("refs.node_affinity:",this.$refs.node_affinity)
+            // console.log("$refs[name]:",this.$refs[name])
+            let validate = false
+            this.$refs[name].validate((valid) => {
+                if (valid) {
+                    // this.$Message.success('表单数据验证成功!');
+                    validate = true
+                    console.log('表单数据验证成功!')
+                } else {
+                    this.$Message.error('表单数据验证失败!');
+                    validate = false
+                }
+            })
+            if(!validate) return
+            let cluster = localStorage.getItem('currentCluster')
+            let namespace = localStorage.getItem('currentNameSpace')
+            let headers = {"cluster_name":cluster}
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let node_affinity = this.node_affinity
+            let action = "add_node_affinity"
+            let deploy_name = this.deploy_name
+            let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action,"node_affinity":node_affinity})
+            console.log("添加节点亲和data: ",data)
+            if(cluster){
+                axios({
+                    method: 'post', url: url,headers: headers,data: data,
+                }).then( (response) => {
+                    console.log(response.data)
+                    let info = JSON.stringify(response.data)
+                    if(info.indexOf('ok') != -1) {
+                        this.$Message.success('添加容忍成功')
+                        this.show_add_node_affinity_modal = false
+                        this.refresh()
+                    }else {
+                        alert(info)
+                    }
+                }).catch(function (error){
+                    alert(error);
+                })
+            }
+        },
+        // 添加添加节点亲和性事件
+        btn_add_node_affinity(){
+            if(!this.check()) return
+            let select_count = this.selecteds.length
+            if (select_count > 1){
+                this.$Message.error("此操作暂时不能批量")
+                return false
+            }
+            let  name = this.selecteds[0].name
+            // 为后续操作准备好deployment的名称
+            this.deploy_name = name
+            // 显示添加容忍模态框
+            this.show_add_node_affinity_modal = true
+        } ,
+        // 提交删除容忍事件
+        submit_del_toleration(){
+            let  toleration= this.tolerations[this.toleration_del_index]
+            console.log('toleration:',toleration)
+            let cluster = localStorage.getItem('currentCluster')
+            let namespace = localStorage.getItem('currentNameSpace')
+            let action = "delete_toleration"
+            let deploy_name = this.deploy_name
+            let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action,"toleration":toleration})
+            console.log("序列化后的表单数据:"+data)
+            if(cluster){
+                axios({
+                    method: 'post',
+                    url: 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2",
+                    headers: {"cluster_name":cluster },
+                    data: data,
+                }).then( (response) => {
+                    console.log(response.data)
+                    let info = JSON.stringify(response.data)
+                    if(info.indexOf('ok') != -1) {
+                        this.$Message.success('删除容忍成功')
+                        this.show_del_toleration_modal = false
+                        this.refresh()
+                    }else {
+                        alert(info)
+                    }
+                }).catch(function (error){
+                    console.log(error);
+                })
+            } 
+        },
+        // 删除容忍点击事件
+        btn_del_toleration(){
+            if(!this.check()) return
+            let select_count = this.selecteds.length
+            if (select_count > 1){
+                this.$Message.error("此操作暂时不能批量")
+                return false
+            }
+            let  name = this.selecteds[0].name
+            let tolerations = this.selecteds[0].tolerations
+            this.tolerations = tolerations
+            console.log("即将删除容忍:",this.tolerations)
+            // 为后续操作准备好deployment的名称
+
+            this.deploy_name = name
+            // 显示添加容忍模态框
+            this.show_del_toleration_modal = true
+        },
         // 提交添加容忍事件 
         submit_add_toleration(){
             let cluster = localStorage.getItem('currentCluster')

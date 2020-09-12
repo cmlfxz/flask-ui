@@ -8,7 +8,7 @@
                 <Button type="error"   @click="del_label(index)">删标签</Button> 
             </template>
         </i-table>
-        <!-- 添加容忍模态框 -->
+        <!-- 添加污点模态框 -->
         <Modal v-model="show_add_taint_modal" width="600">
             <p slot="header" style="color:#f60;text-align:center">
                 {{ node_name }}<span>增加污点</span>
@@ -32,7 +32,7 @@
                 <Button type="primary" size="large"  @click="btn_add_taint">提交</Button>
             </div>
         </Modal>
-        <!-- 删除容忍模态框 -->
+        <!-- 删除污点模态框 -->
         <Modal v-model="show_del_taint_modal" width="600">
             <p slot="header" style="color:#f60;text-align:center;">
                 {{ node_name }}<span>删除污点</span>
@@ -215,7 +215,7 @@ export default {
                     console.log(response.data.msg)
                     let info = JSON.stringify(response.data)
                     if(info.indexOf('ok') != -1) {
-                        this.$Message.success('恭喜你，添加容忍成功')
+                        this.$Message.success('恭喜你，添加污点成功')
                         this.show_add_taint_modal = false
                         this.refresh()
                         
@@ -228,7 +228,7 @@ export default {
             }
 
         },
-        // 删除容忍点击事件
+        // 删除污点点击事件
         del_taint(index) {
             let node_name = this.node_list[index].name;
             let taints = this.node_list[index].taints
@@ -260,7 +260,7 @@ export default {
                     console.log(response.data)
                     let info = JSON.stringify(response.data)
                     if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除容忍成功')
+                        this.$Message.success('删除污点成功')
                         this.show_del_taint_modal = false
                         this.refresh()
                     }else {
