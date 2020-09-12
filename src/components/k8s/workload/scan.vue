@@ -282,11 +282,11 @@ export default {
                 },
             ],
             deployment_list:[],
-            daemonSet_list:[],
+            daemonset_list:[],
             statefulset_list:[],
             service_list:[],
             destination_rule_list:[],
-            virtual_Service_list:[],
+            virtual_service_list:[],
             ingress_list:[],
             gateway_list:[],      
         }
