@@ -18,6 +18,7 @@
 
 <script>
 import axios from 'axios';
+ import { get_namespace_list,delete_namespace,update_namespace } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -68,7 +69,7 @@ export default {
             // console.log("this.$refs.page.currentPage",this.$refs.page.currentPage)
             // console.log("ref.page:",this.$refs.page)
             let cluster = localStorage.getItem('currentCluster')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_namespace_list" 
+            let url = get_namespace_list
             let headers = {"cluster_name": cluster }
             let method='post'
             if(cluster){
@@ -100,7 +101,7 @@ export default {
             if(result == false) return 
             let cluster = localStorage.getItem('currentCluster')
 
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_namespace" 
+            let url = delete_namespace
             let headers = {"cluster_name": cluster }
             let data= {"name":name}
             let method='post'
@@ -126,7 +127,7 @@ export default {
             let labels = this.show_list[index].labels
             console.log("update_ns name:",name)
             let cluster = localStorage.getItem('currentCluster')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_namespace" 
+            let url = update_namespace
             let headers = {"cluster_name": cluster }
             let data = JSON.stringify({"name":name,"labels":labels,"action":action})
             let method='post'

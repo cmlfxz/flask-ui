@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import { get_job_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -52,7 +53,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_job_list" 
+            let url = get_job_list
             let headers = {"cluster_name": cluster }
             let data= {"namespace":namespace}
             let method='post'
@@ -67,18 +68,9 @@ export default {
                 })
             }
         },
-        // del_job(index){
-
-        // }
     },
     mounted: function() {
         this.refresh();
-        // this.$bus.$on('clusterChange', ()=> {
-        //     this.refresh()
-        // })
-        // this.$bus.$on('namespaceChange', ()=> {
-        //     this.refresh()
-        // })
     }
 }
 </script>

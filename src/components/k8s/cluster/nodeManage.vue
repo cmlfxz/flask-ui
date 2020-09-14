@@ -93,6 +93,7 @@
 
 <script>
 import axios from 'axios';
+import { update_node,get_node_detail_list } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -207,7 +208,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/update_node",
+                    url: update_node,
                     headers: {"cluster_name":cluster },
                     data: data,
                 }).then( (response) => {
@@ -253,7 +254,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/update_node",
+                    url: update_node,
                     headers: {"cluster_name":cluster },
                     data: data,
                 }).then( (response) => {
@@ -291,7 +292,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/update_node",
+                    url: update_node,
                     headers: {"cluster_name":cluster },
                     data: data,
                 }).then( (response) => {
@@ -343,7 +344,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/update_node",
+                    url: update_node,
                     headers: {"cluster_name":cluster },
                     data: data,
                 }).then( (response) => {
@@ -367,7 +368,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/get_node_detail_list",
+                    url: get_node_detail_list,
                     headers: {"cluster_name":cluster },
                 }).then(response => (this.node_list = response.data))
                 .catch(function (error){

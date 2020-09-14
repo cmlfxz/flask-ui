@@ -14,6 +14,7 @@
 
 <script>
 import axios from 'axios';
+import { blog_add } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -57,7 +58,7 @@ export default {
             let data = {"title":post.title,"body":post.body,"username": username}
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/blog"+"/add",
+                url: blog_add,
                 data: data,
             }).then( (response) => {
                     let info = JSON.stringify(response.data)

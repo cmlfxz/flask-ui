@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import { delete_istio_policy, get_istio_policy_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -52,7 +53,7 @@ export default {
             let namespace = this.show_list[index].namespace
             let headers = {"cluster_name": cluster }
             let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_istio_policy" 
+            let url = delete_istio_policy
             let method='post'
             if(cluster){
                 axios({
@@ -73,7 +74,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_istio_policy_list" 
+            let url = get_istio_policy_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

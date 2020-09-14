@@ -32,6 +32,7 @@
 
 <script>
 import axios from 'axios';
+import { blog_list } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -44,7 +45,7 @@ export default {
         refresh() {
             let username = localStorage.getItem("username")
             if(username){
-                let url = 'http://flask-admin:8081' + "/blog"+"/list" 
+                let url = blog_list
                 let method='post'
                 let data = {"username":username}
                 axios({

@@ -9,6 +9,7 @@
 
 <script>
 import axios from 'axios';
+import { get_storageclass_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -54,7 +55,7 @@ export default {
     methods: {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_storageclass_list" 
+            let url = get_storageclass_list
             let headers = {"cluster_name": cluster }
             let method='post'
             if(cluster){

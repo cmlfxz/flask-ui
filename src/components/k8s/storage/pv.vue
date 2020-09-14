@@ -68,6 +68,7 @@
 
 <script>
 import axios from 'axios';
+import { delete_multi_pv, delete_pv,get_pv_list,create_pv} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -182,7 +183,7 @@ export default {
             if(result == false) return 
             let cluster = localStorage.getItem('currentCluster')
 
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_multi_pv" 
+            let url = delete_multi_pv
             let headers = {"cluster_name": cluster }
             data = JSON.stringify({"pv_list":data})
             let method='post'
@@ -215,7 +216,7 @@ export default {
             if(result == false) return 
             let cluster = localStorage.getItem('currentCluster')
 
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_pv" 
+            let url = delete_pv
             let headers = {"cluster_name": cluster }
             let data= {"namespace":namespace,"name":name}
             let method='post'
@@ -239,7 +240,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             // let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_pv_list" 
+            let url = get_pv_list
             let headers = {"cluster_name": cluster }
             // let data= {"namespace": namespace}
             
@@ -318,7 +319,7 @@ export default {
                 console.log(pv)
             }
             let cluster = localStorage.getItem('currentCluster')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/create_pv" 
+            let url = create_pv
             let headers = {"cluster_name": cluster }
             let data=  JSON.stringify({"name":pv_name,"pv":pv})
             let method='post'

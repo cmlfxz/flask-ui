@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+import { loginUrl } from  '@/api'
 export default {
   name: 'LoginForm',
     data() {
@@ -70,7 +71,7 @@ export default {
             // alert(this.username+" "+this.password)
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/auth"+"/login",
+                url:loginUrl,
                 data: {
                     'username': this.loginForm.username,
                     'password': this.loginForm.password

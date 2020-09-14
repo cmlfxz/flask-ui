@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import { delete_statefulset,get_statefulset_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -71,7 +72,7 @@ export default {
                 return
             }
             let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_statefulset" 
+            let url = delete_statefulset
             let method='post'
             if(cluster){
                 axios({
@@ -92,7 +93,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_statefulset_list" 
+            let url = get_statefulset_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

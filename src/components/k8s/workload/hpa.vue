@@ -7,6 +7,7 @@
 
 <script>
 import axios from 'axios';
+import { get_hpa_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -44,7 +45,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_hpa_list" 
+            let url = get_hpa_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

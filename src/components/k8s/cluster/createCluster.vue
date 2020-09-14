@@ -30,6 +30,7 @@
 
 <script>
 import axios from 'axios';
+ import { cluster_create } from  '@/api'
 export default {
   name: 'CreateCluster',
 //   props: {
@@ -77,7 +78,7 @@ export default {
             formData.append('cluster_type',this.clusterForm.cluster_type)
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/frontend_k8s"+"/cluster_create",
+                url: cluster_create,
                 data: formData,
                 headers: {
                     'Content-Type': 'multipart/form-data;boundary = ' + new Date().getTime()

@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios';
+import { blog_delete,blog_detail} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -33,7 +34,7 @@ export default {
             let result = confirm("确定要删除<"+title+">吗?")
             if(result == false) return 
             let data = {"id":id}
-            let url = 'http://flask-admin:8081' + "/blog"+"/delete"
+            let url = blog_delete
             let method='post'
 
             axios({
@@ -55,7 +56,7 @@ export default {
             let id = query.id
             console.log("post detail 接收到的参数id:",id)
             if(id){
-                let url = 'http://flask-admin:8081' + "/blog"+"/detail" 
+                let url = blog_detail
                 let method='post'
                 let data = {"id":id}
                 axios({

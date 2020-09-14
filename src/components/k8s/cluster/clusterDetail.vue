@@ -35,6 +35,7 @@
 import axios from 'axios';
 import store from '@/store'
 import echarts from 'echarts'
+import { get_cluster_stats } from  '@/api'
 export default {
 
     name:'ClusterDetail',
@@ -97,7 +98,7 @@ export default {
             try {
                 let response = await axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/get_cluster_stats",
+                    url: get_cluster_stats,
                     headers: {"cluster_name":cluster},
                     data:{"stat_type":stat_type},
                 })

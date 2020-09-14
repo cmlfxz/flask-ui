@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import { get_event_list } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -50,7 +51,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_event_list" 
+            let url = get_event_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}
@@ -69,14 +70,6 @@ export default {
     },
     mounted: function() {
         this.refresh();
-        // this.$bus.$on('clusterChange', ()=> {
-        //     console.log("集群改变触发了namespace更新")
-        //     this.refresh()
-        // })
-        // this.$bus.$on('namespaceChange', ()=> {
-        //     console.log("命名空间改变触发了namespace更新")
-        //     this.refresh()
-        // })
     }
 }
 </script>

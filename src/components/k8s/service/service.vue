@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import { delete_service, get_service_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -80,7 +81,7 @@ export default {
                 return
             }
             let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_service" 
+            let url = delete_service
             let method='post'
             if(cluster){
                 axios({
@@ -101,7 +102,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_service_list" 
+            let url = get_service_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

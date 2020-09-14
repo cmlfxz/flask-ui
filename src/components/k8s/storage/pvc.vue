@@ -13,6 +13,7 @@
 
 <script>
 import axios from 'axios';
+import { delete_pvc, get_pvc_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -69,7 +70,7 @@ export default {
             if(result == false) return 
             let cluster = localStorage.getItem('currentCluster')
 
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_pvc" 
+            let url = delete_pvc
             let headers = {"cluster_name": cluster }
             let data= {"namespace":namespace,"name":name}
             let method='post'
@@ -93,7 +94,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_pvc_list" 
+            let url = get_pvc_list
             let headers = {"cluster_name": cluster }
             let data= {"namespace": namespace}
             let method='post'

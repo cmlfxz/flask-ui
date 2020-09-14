@@ -30,6 +30,7 @@
 
 <script>
 import axios from 'axios';
+import { update_vs,get_virtual_service_list,delete_virtual_service } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -126,7 +127,7 @@ export default {
             let namespace = localStorage.getItem('currentNameSpace')
             let headers = {"cluster_name": cluster }
             let data = data = JSON.stringify({"namespace":namespace,"vs_name":this.vs_name,'canary_weight':this.gray_value})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_vs" 
+            let url = update_vs
             let method='post'
             if(cluster){
                 axios({
@@ -161,7 +162,7 @@ export default {
                 return
             }
             let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_virtual_service" 
+            let url = delete_virtual_service
             let method='post'
             if(cluster){
                 axios({
@@ -182,7 +183,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_virtual_service_list" 
+            let url = get_virtual_service_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

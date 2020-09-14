@@ -29,6 +29,7 @@
 
 <script>
 import axios from 'axios';
+import { get_env_by_project_name,get_cluster_by_env_name,create_namespace } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -56,7 +57,7 @@ export default {
         async  getEnvList() {
             try {
                 let data =  JSON.stringify({"project_name":this.project_name})
-                let url = 'http://flask-admin:8081' + "/frontend_k8s"+"/get_env_by_project_name" 
+                let url = get_env_by_project_name
                 let method='post'
                 let response = await axios({
                     method: method,
@@ -73,7 +74,7 @@ export default {
         async  get_cluster(env_name) {
             try {
                 let data =  JSON.stringify({"env_name":env_name})
-                let url = 'http://flask-admin:8081' + "/frontend_k8s"+"/get_cluster_by_env_name" 
+                let url = get_cluster_by_env_name
                 let method='post'
                 let response = await axios({
                     method: method,
@@ -137,7 +138,7 @@ export default {
             }  
         },
         get_project() {
-            let url = 'http://flask-admin:8081' + "/frontend_k8s"+"/create_namespace" 
+            let url = create_namespace
             let method='post'
             axios({
                 url:url,method:method

@@ -36,6 +36,7 @@
 
 <script>
 import axios from 'axios';
+import { get_deployment_detail} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -114,7 +115,7 @@ export default {
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace,'name':name}
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_deployment_detail" 
+            let url = get_deployment_detail
             if(cluster){
                 axios({
                     url:url,headers: headers,data:data,method:method

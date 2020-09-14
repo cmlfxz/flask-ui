@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios';
+import { get_secret_detail } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -39,8 +40,6 @@ export default {
         }
     },
     methods: {
-        refresh() {
-        }
     },
     mounted: function() {
         // console.log(this.$route)
@@ -59,7 +58,7 @@ export default {
         let headers = {"cluster_name": cluster }
         let method='post'
         let data = {"namespace":namespace,'name':name}
-        let url = 'http://flask-gateway:8000' + "/k8s"+"/get_secret_detail" 
+        let url = get_secret_detail
         if(cluster){
             axios({
                 url:url,headers: headers,data:data,method:method

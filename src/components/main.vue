@@ -122,6 +122,7 @@
 <script>
     import store from '@/store';
     import axios from 'axios';
+    import { get_cluster_name_list,get_namespace_name_list } from '@/api'
     export default {
         name: 'Home',
         data () {
@@ -227,7 +228,7 @@
                 try {
                     let response = await axios({
                         method: 'post',
-                        url: 'http://flask-admin:8081' + "/frontend_k8s"+"/get_cluster_name_list",
+                        url: get_cluster_name_list,
                     })
                     // console.log(response.data);
                     return response.data;
@@ -242,7 +243,7 @@
                 try {
                     let response = await axios({
                         method: 'post',
-                        url: 'http://flask-gateway:8000' + "/k8s"+"/get_namespace_name_list",
+                        url: get_namespace_name_list,
                         headers: {'cluster_name':cluster_name},
                     })
                     // console.log(response.data);

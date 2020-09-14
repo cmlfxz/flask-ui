@@ -6,6 +6,7 @@
 
 <script>
 import axios from 'axios';
+import { get_env_list } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -33,7 +34,7 @@ export default {
     },
     methods: {
         refresh() {
-            let url = 'http://flask-admin:8081' + "/frontend_k8s"+"/get_env_list" 
+            let url = get_env_list
             let method='post'
             axios({
                 url:url,method:method

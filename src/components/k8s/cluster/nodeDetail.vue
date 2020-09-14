@@ -6,6 +6,7 @@
 
 <script>
 import axios from 'axios';
+import { get_node_detail_list_v2 } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -87,7 +88,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/get_node_detail_list_v2",
+                    url: get_node_detail_list_v2,
                     headers: {"cluster_name":cluster },
                 }).then(response => (this.node_detail_list = response.data))
                 .catch(function (error){

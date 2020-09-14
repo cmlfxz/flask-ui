@@ -42,9 +42,8 @@
 </template>
 <script>
 import axios from 'axios';
+import { delete_pod,get_pod_list_by_node,get_namespaced_pod_list,get_node_name_list} from  '@/api'
 // import store from '@/store'
-let gateway = "http://flask-gateway:8000"
-const get_node_name_list = gateway + "/k8s"+"/get_node_name_list" 
 
 export default {
     data() {
@@ -156,7 +155,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let headers = {"cluster_name": cluster }
             let data = JSON.stringify({"namespace":namespace,"pod_name":pod_name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_pod" 
+            let url = delete_pod
             let method='post'
             if(cluster){
                 axios({
@@ -241,7 +240,7 @@ export default {
         refresh_pod_by_namespace(){
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_namespaced_pod_list" 
+            let url = get_namespaced_pod_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}
@@ -271,7 +270,7 @@ export default {
         // 刷新按node展示的pod列表
         refresh_pod_by_node(){
             let cluster = localStorage.getItem('currentCluster')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_pod_list_by_node" 
+            let url = get_pod_list_by_node
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = data = JSON.stringify({"cluster_name":cluster,"node":this.node})

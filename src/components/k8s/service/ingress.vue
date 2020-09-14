@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+ import { delete_ingress, get_ingress_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -65,7 +66,7 @@ export default {
                 return
             }
             let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_ingress" 
+            let url = delete_ingress
             let method='post'
             if(cluster){
                 axios({
@@ -86,7 +87,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_ingress_list" 
+            let url = get_ingress_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

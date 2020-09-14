@@ -168,6 +168,7 @@
 
 <script>
 import axios from 'axios';
+import { update_deploy_v2,delete_deploy,get_deployment_list} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -324,7 +325,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
             let headers = {"cluster_name":cluster}
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let url = update_deploy_v2
             let action = "delete_pod_anti_affinity"
             let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action})
             console.log("删除POD互斥调度data: ",data)
@@ -378,7 +379,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
             let headers = {"cluster_name":cluster}
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let url = update_deploy_v2
             let pod_anti_affinity = this.pod_anti_affinity
             let action = "add_pod_anti_affinity"
             let deploy_name = this.deploy_name
@@ -421,7 +422,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
             let headers = {"cluster_name":cluster}
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let url = update_deploy_v2
             let action = "delete_node_affinity"
             let data=JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,"action":action})
             console.log("删除节点亲和data: ",data)
@@ -480,7 +481,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
             let headers = {"cluster_name":cluster}
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let url = update_deploy_v2
             let node_affinity = this.node_affinity
             let action = "add_node_affinity"
             let deploy_name = this.deploy_name
@@ -531,7 +532,7 @@ export default {
             if(cluster){
                 axios({
                     method: 'post',
-                    url: 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2",
+                    url: update_deploy_v2,
                     headers: {"cluster_name":cluster },
                     data: data,
                 }).then( (response) => {
@@ -572,7 +573,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
             let headers = {"cluster_name":cluster}
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2"
+            let url = update_deploy_v2
             // let toleration = {
             //     "effect":this.toleration.effect,
             //     "key":this.toleration.key,
@@ -649,7 +650,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
 
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/update_deploy_v2" 
+            let url = update_deploy_v2
             let headers = {"cluster_name": cluster }
             let action = "update_replicas"
             let data = JSON.stringify({"namespace":namespace,"deploy_name":deploy_name,'replicas':replicas,"action":action})
@@ -689,7 +690,7 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
 
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_deploy" 
+            let url = delete_deploy
             let headers = {"cluster_name": cluster }
             let data = JSON.stringify({"namespace":namespace,"deploy_name":deploy_name})
             let method='post'
@@ -740,7 +741,7 @@ export default {
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
             let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_deployment_list" 
+            let url = get_deployment_list
             let headers = {"cluster_name": cluster }
             let method='post'
             let data = {"namespace":namespace}

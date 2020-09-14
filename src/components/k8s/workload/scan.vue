@@ -21,17 +21,8 @@
 
 <script>
 import axios from 'axios';
+import { get_deployment_list,get_daemonset_list,get_statefulset_list,get_service_list,get_destination_rule_list,get_virtual_service_list,get_ingress_list,get_gateway_list} from  '@/api'
 // import store from '@/store'
-let gateway = "http://flask-gateway:8000"
-const get_deployment_list = gateway +"/k8s"+"/get_deployment_list"
-const get_daemonset_list = gateway +"/k8s"+"/get_daemonset_list"
-const get_statefulset_list = gateway +"/k8s"+"/get_statefulset_list"
-const get_service_list = gateway +"/k8s"+"/get_service_list"
-const get_destination_rule_list = gateway +"/k8s"+"/get_destination_rule_list"
-const get_virtual_service_list = gateway +"/k8s"+"/get_virtual_service_list"
-const get_ingress_list = gateway +"/k8s"+"/get_ingress_list"
-const get_gateway_list = gateway +"/k8s"+"/get_gateway_list"
-
 
 export default {
     data() {

@@ -16,6 +16,7 @@
 
 <script>
 import axios from 'axios';
+ import { cluster_list } from  '@/api'
 export default {
     name: 'ClusterList',
     data() {
@@ -81,7 +82,7 @@ export default {
         refresh() {
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/frontend_k8s"+"/cluster_list",
+                url: cluster_list,
             }).then( (response) => {
                 console.log(response.data);
                 this.clusterList = response.data;

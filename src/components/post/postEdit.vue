@@ -19,6 +19,7 @@
 
 <script>
 import axios from 'axios';
+ import { blog_update,blog_detail} from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -59,7 +60,7 @@ export default {
             let data = {"id":post.id,"title":post.title,"body":post.content,"username": username}
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/blog"+"/update",
+                url: blog_update,
                 data: data,
             }).then( (response) => {
                     let info = JSON.stringify(response.data)
@@ -79,7 +80,7 @@ export default {
             let id = query.id
             console.log("post edit 接收到的参数id:",id)
             if(id){
-                let url = 'http://flask-admin:8081' + "/blog"+"/detail" 
+                let url = blog_detail
                 let method='post'
                 let data = {"id":id}
                 axios({
