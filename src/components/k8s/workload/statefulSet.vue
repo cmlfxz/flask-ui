@@ -110,6 +110,12 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     this.refresh()
+        // })
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     this.refresh()
+        // })
     }
 }
 </script>

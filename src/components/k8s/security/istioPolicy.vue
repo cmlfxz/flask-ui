@@ -34,9 +34,9 @@ export default {
                 {
                     title: '创建时间',key: 'create_time'
                 },
-                // {
-                //     title: '操作',slot: 'action',width: 100,align: 'center'
-                // }
+                {
+                    title: '操作',slot: 'action',width: 100,align: 'center'
+                }
             ],
             show_list: [],
         }
@@ -45,15 +45,12 @@ export default {
         del_istio_policy(index){
             // console.log(index)
             let name = this.show_list[index].name
-            let result = confirm("确定要删除"+name+"服务吗?")
+            let result = confirm("确定要删除"+name+"安全策略吗?")
             if(result == false) return 
             let cluster = localStorage.getItem('currentCluster')
-            let namespace = localStorage.getItem('currentNameSpace')
+            // let namespace = localStorage.getItem('currentNameSpace')
+            let namespace = this.show_list[index].namespace
             let headers = {"cluster_name": cluster }
-            if (namespace =='' || namespace == 'all'){
-                alert("去选择具体的namespace")
-                return
-            }
             let data = JSON.stringify({"namespace":namespace,"name":name})
             let url = 'http://flask-gateway:8000' + "/k8s"+"/delete_istio_policy" 
             let method='post'
@@ -94,6 +91,12 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     this.refresh()
+        // })
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     this.refresh()
+        // })
     }
 }
 </script>

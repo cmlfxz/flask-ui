@@ -94,7 +94,7 @@ export default {
                     title: '内存使用(M)',key: 'memory_usage(M)',sortable: true
                 },
                 {
-                    title: '容器使用',key: 'container_usage',width:500,
+                    title: '容器使用',key: 'container_usage',width:300,
                     render: (h, params) => {
                         return h('div', [
                             h('pre', JSON.stringify(params.row.container_usage,undefined,4))
@@ -103,7 +103,7 @@ export default {
 
                 },
                 {
-                    title: '操作',slot: 'action',width: 400,align: 'center'
+                    title: '操作',slot: 'action',width: 100,align: 'center'
                 }
             ],
             // show_list
@@ -115,6 +115,8 @@ export default {
             total_list: [],
             total: 0,
             pageSize: 10,
+            // 设置默认为按命名空间查询数据
+            tab_name: 'by_namespace',
         }
     },
     methods: {
@@ -136,7 +138,8 @@ export default {
             // 根据不同的tab页设置显示数据
             // this.show_list = this.total_list.slice(_start,_end)
 
-            let tab = this.$refs.pod_tab.activeKey
+            // let tab = this.$refs.pod_tab.activeKey
+            let tab = this.tab_name
             if(tab=="by_namespace"){
                 this.show_pod_list_by_namespace = this.total_list.slice(_start,_end)
             } else if (tab=="by_node"){
@@ -187,26 +190,30 @@ export default {
                 this.del_pod(namespace,pod_name)
             }
         },
+
         // 切换tab点击事件
         async changeTab(name){
             // bug 由于共享page，total，pageSize这里的数据会出现错误
-            if(name=='by_namespace'){
-                // 调用可以重置page total等数据
-                this.refresh_pod_by_namespace()
-            }else if(name=='by_node') {
-                // this.refresh_pod_by_node()
-                // 显示node选择
-                let node_list = await this.get_obj_list(get_node_name_list)
-                if(node_list){
-                    this.node_list = node_list
-                    // 设置默认选中
-                    this.node = this.node_list[0]
-                    this.refresh_pod_by_node()
-                }
-            } else {
-                alert("没有此tab页:",name)
-                return
-            }
+            // 记录下tab页的名字，后续有用
+            this.tab_name = name
+            this.refresh_by_tab(name)
+            // if(name=='by_namespace'){
+            //     // 调用可以重置page total等数据
+            //     this.refresh_pod_by_namespace()
+            // }else if(name=='by_node') {
+            //     // this.refresh_pod_by_node()
+            //     // 显示node选择
+            //     let node_list = await this.get_obj_list(get_node_name_list)
+            //     if(node_list){
+            //         this.node_list = node_list
+            //         // 设置默认选中
+            //         this.node = this.node_list[0]
+            //         this.refresh_pod_by_node()
+            //     }
+            // } else {
+            //     alert("没有此tab页:",name)
+            //     return
+            // }
         },
         changeNode() {
             // alert(this.node)
@@ -229,20 +236,7 @@ export default {
                 }
             }
         },
-        // 
-        refresh(){
-            // console.log(this.$refs.pod_tab)
-            // console.log(this.$refs.pod_tab.activeKey)
-            let tab = this.$refs.pod_tab.activeKey
-            if(tab=="by_namespace"){
-                this.refresh_pod_by_namespace()
-            } else if (tab=="by_node"){
-                this.refresh_pod_by_node()
-            } else {
-                alert("没有此tab页:",tab)
-                return
-            }
-        },
+
         // 刷新按命名空间显示的pod列表
         refresh_pod_by_namespace(){
             let cluster = localStorage.getItem('currentCluster')
@@ -304,10 +298,55 @@ export default {
                 })
             }
         },
+        // 删除pod之后调用
+        refresh(){
+            // console.log(this.$refs.pod_tab)
+            // console.log(this.$refs.pod_tab.activeKey)
+            // let tab = this.$refs.pod_tab.activeKey
+            let tab = this.tab_name
+            if(tab=="by_namespace"){
+                this.refresh_pod_by_namespace()
+            } else if (tab=="by_node"){
+                this.refresh_pod_by_node()
+            } else {
+                alert("没有此tab页:",tab)
+                return
+            }
+        },
+        async refresh_by_tab(tab){
+            // bug这种方式会有读取不到的情况
+            // let tab = this.$refs.pod_tab.activeKey
+            // let tab = this.tab_name
+            if(tab=="by_namespace"){
+                // 这个函数里面必须先获取集群
+                this.refresh_pod_by_namespace()
+            } else if (tab=="by_node"){
+                let node_list = await this.get_obj_list(get_node_name_list)
+                if(node_list){
+                    this.node_list = node_list
+                    // 设置默认选中
+                    this.node = this.node_list[0]
+                    this.refresh_pod_by_node()
+                }
+            } else {
+                alert("没有此tab页:",tab)
+                return
+            }   
+        }
     },
     mounted: function() {
         // 默认按命名空间显示列表
-        this.refresh_pod_by_namespace()
+        this.refresh_pod_by_namespace();
+        // 
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     console.log("命名空间改变触发了Pod更新")
+        //     this.refresh()
+        // });
+        // this.$bus.$on('clusterChange', ()=> {
+        //     console.log("集群改变触发了pod更新")
+        //     let tab = this.tab_name
+        //     this.refresh_by_tab(tab)
+        // })
     }
 }
 </script>

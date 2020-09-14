@@ -51,8 +51,8 @@ export default {
     data() {
         return {
             loginForm: {
-                username: "",
-                password: "",
+                username: null,
+                password: null,
             },
             rules: {
                 username: [
@@ -66,6 +66,7 @@ export default {
     },
     methods: {
         login: function() {
+            console.log("进入login函数")
             // alert(this.username+" "+this.password)
             axios({
                 method: 'post',
@@ -79,7 +80,9 @@ export default {
                     console.log(response.data.msg)
                     if(response.data.msg == 'ok') {
                         this.$Message.success('恭喜你，登录成功')
-                        localStorage.setItem("username",JSON.stringify(this.loginForm.username))
+                        console.log("this.loginForm.username:",this.loginForm.username)
+                        // localStorage.setItem("username",JSON.stringify(this.loginForm.username))
+                        localStorage.setItem("username",this.loginForm.username)
                         this.$router.push('/')
                     }else {
                         this.$Message('账号密码错误，请重新输入')

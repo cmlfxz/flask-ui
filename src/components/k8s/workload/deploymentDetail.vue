@@ -96,51 +96,52 @@ export default {
     },
     methods: {
         refresh() {
+            // bug 切换命名空间 刷新 没效果， 其实是应该在详情页 屏蔽命名空间的select
+            // console.log(this.$route)
+            // console.log(this.$router.currentRoute.query.name)
+            console.log("执行刷新函数")
+            let query = this.$router.currentRoute.query
+            let name = query.name
+            let cluster = query.cluster_name
+            let namespace = query.namespace
+
+            console.log("获取到的参数name:",name,"cluster:",cluster,"namespace:",namespace)
+            if (name == null || namespace == null || cluster == null){
+                this.$Message.error("name,namesapce,cluster_name不能为空")
+                return
+            }
+
+            let headers = {"cluster_name": cluster }
+            let method='post'
+            let data = {"namespace":namespace,'name':name}
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_deployment_detail" 
+            if(cluster){
+                axios({
+                    url:url,headers: headers,data:data,method:method
+                }).then( (response) => {
+                    console.log(response.data);
+                    this.detail = response.data
+                    if(this.detail.hpa){
+                        console.log("装载hpa")
+                        this.hpa_list.push(this.detail.hpa)
+                    }
+
+                    console.log(this.hpa_list)
+                    if(this.detail.event_list){
+                        console.log("装载event_list")
+                        this.event_list = JSON.parse(this.detail.event_list)
+                    }else{
+                        console.log("不装载event_list")
+                    }
+
+                }).catch(function (error){
+                    console.log(error)
+                })
+            }
         }
     },
     mounted: function() {
-        // bug 切换命名空间 刷新 没效果， 其实是应该在详情页 屏蔽命名空间的select
-        // console.log(this.$route)
-        // console.log(this.$router.currentRoute.query.name)
-        let query = this.$router.currentRoute.query
-        let name = query.name
-        let cluster = query.cluster_name
-        let namespace = query.namespace
-
-        console.log("获取到的参数name:",name,"cluster:",cluster,"namespace:",namespace)
-        if (name == null || namespace == null || cluster == null){
-            this.$Message.error("name,namesapce,cluster_name不能为空")
-            return
-        }
-
-        let headers = {"cluster_name": cluster }
-        let method='post'
-        let data = {"namespace":namespace,'name':name}
-        let url = 'http://flask-gateway:8000' + "/k8s"+"/get_deployment_detail" 
-        if(cluster){
-            axios({
-                url:url,headers: headers,data:data,method:method
-            }).then( (response) => {
-                console.log(response.data);
-                this.detail = response.data
-                if(this.detail.hpa){
-                    console.log("装载hpa")
-                    this.hpa_list.push(this.detail.hpa)
-                }
-
-                console.log(this.hpa_list)
-                if(this.detail.event_list){
-                    console.log("装载event_list")
-                    this.event_list = JSON.parse(this.detail.event_list)
-                }else{
-                    console.log("不装载event_list")
-                }
-
-            }).catch(function (error){
-                console.log(error)
-            })
-        }
-
+        this.refresh()
     }
 }
 </script>

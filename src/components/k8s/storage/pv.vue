@@ -344,6 +344,9 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     this.refresh()
+        // })
     }
 }
 </script>

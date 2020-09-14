@@ -16,6 +16,8 @@ Vue.config.productionTip = false
 // Vue.use(ElementUI);
 Vue.use(ViewUI);
 
+// Vue.prototype.$bus = new Vue()
+// Vue.prototype.$bus = 'app123454545'
 // Vue.use(VueRouter);
 
 // const router = new VueRouter({
@@ -23,7 +25,10 @@ Vue.use(ViewUI);
 //   // mode: 'history'
 // })
 
-new Vue({
+Vue.prototype.$bus = new Vue({
+  // beforeCreate: function () {
+  //   console.log(this.$bus)
+  // },
   router,
   render: h => h(App),
 }).$mount('#app')

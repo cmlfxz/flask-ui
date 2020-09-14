@@ -7,7 +7,7 @@
 // main.js import 会进入这里找routes 这个文件太多内容 可以分担给routers.js 再从routers.js 引入
 import Vue from 'vue'
 import VueRouter from 'vue-router';
-import Home from  '../components/home.vue';
+import Main from  '../components/main.vue';
 import LoginForm from '../components/flask-login.vue';
 import CreateCluster from  '../components/k8s/cluster/createCluster.vue'
 import ClusterList from  '../components/k8s/cluster/clusterList.vue'
@@ -30,24 +30,46 @@ const routes = [
             title: '登录'
         }
     },
-    // {
-    //     path: '/home',
-    //     name: 'home',
-    //     component: Home
-    // },
     {
         path: '/',
-        redirect: '/home'
-    },
-    {
-        path: '/home',
-        name: 'home',
-        component: Home,
-        meta: {
-            isLogin: true,
-            title: '首页'
-        },
+        name: '_home',
+        redirect: '/home',
+        component: Main,
         children: [
+            {
+                path: '/home',
+                name: 'home',
+                component: resolve=>{require(['@/components/post/postList'],resolve);},
+                // component: resolve=>{require(['@/components/k8s/cluster/eventList'],resolve);},
+                // component: () =>import ('@/components/k8s/cluster/clusterDetail.vue'),
+                meta: {
+                    isLogin: true,
+                    title: '首页'
+                },
+            },
+            // post
+            {
+                path: '/postAdd',
+                name: 'postAdd',
+                component: () =>import ('@/components/post/postAdd.vue'),
+            },
+            {
+                path: '/postEdit',
+                name: 'postEdit',
+                component: () =>import ('@/components/post/postEdit.vue'),
+            },
+            {
+                path: '/postList',
+                name: 'postList',
+                component: () =>import ('@/components/post/postList.vue'),
+            },
+            {
+                path: '/postDetail',
+                name: 'postDetail',
+                component: () =>import ('@/components/post/postDetail.vue'),
+            },
+
+            // cluster
             {
                 path: '/createCluster',
                 name: 'createCluster',
@@ -125,7 +147,8 @@ const routes = [
             {
                 path: '/k8s/workload/deployment',
                 name: 'deployment',
-                component: resolve=>{require(['@/components/k8s/workload/deployment'],resolve);},
+                // component: resolve=>{require(['@/components/k8s/workload/deployment'],resolve);},
+                component: () => import ('@/components/k8s/workload/deployment.vue')
             }, 
             {
                 path: '/k8s/workload/deploymentDetail',
@@ -247,8 +270,10 @@ const router = new VueRouter({
 router.beforeEach((to,from,next) => {
     // 先从localStorage获取username
     // console.log(to+from+next)
-    console.log(to.meta.title+to.meta.isLogin)
-    let username = JSON.parse(localStorage.getItem('username'))
+    // console.log(to.meta.title+to.meta.isLogin)
+    // bug错误，加入用户第一次登陆，这里会出现一直跳转到login
+    console.log("to.name:",to.name)
+    let username = localStorage.getItem('username')
     next();
     console.log("username is : "+username);
     if(username  === null) {

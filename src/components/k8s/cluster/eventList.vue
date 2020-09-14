@@ -69,6 +69,14 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     console.log("集群改变触发了namespace更新")
+        //     this.refresh()
+        // })
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     console.log("命名空间改变触发了namespace更新")
+        //     this.refresh()
+        // })
     }
 }
 </script>

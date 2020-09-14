@@ -1,21 +1,21 @@
 <template>
     <div>
         <h2>Deployment</h2>
-        <i-table border stripe  :columns="deployment" :data="deployment_list" ></i-table >
+        <i-table border stripe  :columns="deployment" :data="deployment_list" :height="height"></i-table >
         <h2>DaemonSet</h2>
-        <i-table border stripe  :columns="daemonset" :data="daemonset_list" ></i-table >
+        <i-table border stripe  :columns="daemonset" :data="daemonset_list" :height="height"></i-table >
         <h2>StatefulSet</h2>
-        <i-table border stripe  :columns="statefulset" :data="statefulset_list" ></i-table >
+        <i-table border stripe  :columns="statefulset" :data="statefulset_list"  :height="height"></i-table >
         <h2>Service</h2>
-        <i-table border stripe  :columns="service" :data="service_list" ></i-table >
+        <i-table border stripe  :columns="service" :data="service_list"  :height="height"></i-table >
         <h2>DestinationRule</h2>
-        <i-table border stripe  :columns="destination_rule" :data="destination_rule_list" ></i-table >
+        <i-table border stripe  :columns="destination_rule" :data="destination_rule_list"  :height="height"></i-table >
         <h2>VirtualService</h2>
-        <i-table border stripe  :columns="virtual_service" :data="virtual_service_list" ></i-table >
+        <i-table border stripe  :columns="virtual_service" :data="virtual_service_list" :height="height" ></i-table >
         <h2>Ingress</h2>
-        <i-table border stripe  :columns="ingress" :data="ingress_list" ></i-table >
+        <i-table border stripe  :columns="ingress" :data="ingress_list" :height="height" ></i-table >
         <h2>Gateway</h2>
-        <i-table border stripe  :columns="gateway" :data="gateway_list" ></i-table >
+        <i-table border stripe  :columns="gateway" :data="gateway_list"  :height="height"></i-table >
     </div>
 </template>
 
@@ -36,6 +36,7 @@ const get_gateway_list = gateway +"/k8s"+"/get_gateway_list"
 export default {
     data() {
         return {
+            height: "300",
             deployment: [
                 {
                     title: '名字',key: 'name'
@@ -352,6 +353,14 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     console.log("集群改变触发了scan更新")
+        //     this.refresh()
+        // })
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     console.log("命名空间改变触发了scan更新")
+        //     this.refresh()
+        // })
     }
 }
 </script>

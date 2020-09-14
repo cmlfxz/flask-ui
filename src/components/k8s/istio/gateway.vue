@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe  :columns="format" :data="show_list"></i-table >
+        <i-table border stripe  :columns="format" :data="show_list" height="760"></i-table >
     </div>
 </template>
 
@@ -64,6 +64,12 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     this.refresh()
+        // })
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     this.refresh()
+        // })
     }
 }
 </script>

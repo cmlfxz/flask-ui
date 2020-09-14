@@ -11,7 +11,7 @@
             <i-button type="error" style="margin-right: 10px"  @click="btn_del_deploy">删除Deploy</i-button>
 
         </div>
-        <i-table border stripe  ref="deployment_table" @on-selection-change="onSelect"  :columns="format" :data="show_list" height="780">
+        <i-table border stripe  ref="deployment_table" @on-selection-change="onSelect"  :columns="format" :data="show_list" height="740">
             <!-- <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" style="margin-bottom: 5px "  @click="del_xx(index)">删除</Button>
             </template> -->
@@ -770,6 +770,14 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     console.log("集群改变触发了namespace更新")
+        //     this.refresh()
+        // })
+        // this.$bus.$on('namespaceChange', ()=> {
+        //     console.log("命名空间改变触发了namespace更新")
+        //     this.refresh()
+        // })
     }
 }
 </script>

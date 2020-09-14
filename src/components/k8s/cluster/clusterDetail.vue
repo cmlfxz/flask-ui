@@ -93,7 +93,7 @@ export default {
         }
     },
     methods: {
-        async get_schedule_data(cluster,stat_type){
+        async get_cluster_data(cluster,stat_type){
             try {
                 let response = await axios({
                     method: 'post',
@@ -110,24 +110,24 @@ export default {
         },
         add_chart(data) {
             let cluster_data = data[0]
-            let cpu_total = cluster_data.cpu_total
-            let cpu_usage = cluster_data.cpu_usage
+            // let cpu_total = cluster_data.cpu_total
+            // let cpu_usage = cluster_data.cpu_usage
             let cpu_usage_percent = cluster_data.cpu_usage_percent
             let cpu_available_percent = 100 -cpu_usage_percent
 
-            let memory_total = cluster_data.memory_total
-            let memory_usage = cluster_data.memory_usage
+            // let memory_total = cluster_data.memory_total
+            // let memory_usage = cluster_data.memory_usage
             let memory_usage_percent = cluster_data.memory_usage_percent
             let memory_available_percent = 100 -memory_usage_percent
 
-            let pod_total = cluster_data.pod_total
-            let pod_usage = cluster_data.pod_usage
+            // let pod_total = cluster_data.pod_total
+            // let pod_usage = cluster_data.pod_usage
             let pod_usage_percent = cluster_data.pod_usage_percent
             let pod_available_percent = 100 -pod_usage_percent
 
-            console.log(cpu_total,cpu_usage,cpu_usage_percent,cpu_available_percent,
-                        memory_total,memory_usage,memory_usage_percent,memory_available_percent,
-                        pod_total,pod_usage,pod_usage_percent,pod_available_percent)
+            // console.log(cpu_total,cpu_usage,cpu_usage_percent,cpu_available_percent,
+            //             memory_total,memory_usage,memory_usage_percent,memory_available_percent,
+            //             pod_total,pod_usage,pod_usage_percent,pod_available_percent)
 
             let cpu_pie = echarts.init(document.getElementById('cpu-pie'))
             cpu_pie.setOption({
@@ -269,17 +269,18 @@ export default {
             let cluster = localStorage.getItem('currentCluster')
             console.log("refresh cluster:",cluster)
             if (cluster) {
-                let schedule_data = await that.get_schedule_data(cluster,'schedule')
+                // 获取可调度节点数据
+                let schedule_data = await that.get_cluster_data(cluster,'schedule')
                 console.log("schedule_data:",schedule_data)
                 that.scheduleData = schedule_data
                 if(schedule_data){
                     that.add_chart(schedule_data)
                 }
-                let all_data = await that.get_schedule_data(cluster,'all')
+                let all_data = await that.get_cluster_data(cluster,'all')
                 console.log("all_data:",all_data)
                 that.allData = all_data
 
-                let unschedule_data = await that.get_schedule_data(cluster,'unschedule')
+                let unschedule_data = await that.get_cluster_data(cluster,'unschedule')
                 console.log("unschedule_data:",unschedule_data)
                 that.unscheduleData = unschedule_data
 
@@ -298,9 +299,11 @@ export default {
         // 获取命名空间/集群名称
         // 根据cookie 设置当前页面的namespace 和 集群
         // 实际业务部分
-
         this.refresh() 
-
+        // this.$bus.$on('clusterChange', ()=> {
+        //     console.log("集群改变触发了集群详情更新")
+        //     this.refresh()
+        // })
     }
 
 }

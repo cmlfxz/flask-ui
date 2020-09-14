@@ -44,7 +44,7 @@ export default {
             show_list: [],
             // 分页
             total: 0,
-            pageSize: 10,
+            pageSize: 15,
             istio_injection: false,
         }
     },
@@ -64,9 +64,9 @@ export default {
         // bug 取消注入，refresh的页码并没有复原
         refresh() {
             // console.log("ref",this.$refs)
-            console.log("this.$refs.page.current",this.$refs.page.current)
-            console.log("this.$refs.page.currentPage",this.$refs.page.currentPage)
-            console.log("ref.page:",this.$refs.page)
+            // console.log("this.$refs.page.current",this.$refs.page.current)
+            // console.log("this.$refs.page.currentPage",this.$refs.page.currentPage)
+            // console.log("ref.page:",this.$refs.page)
             let cluster = localStorage.getItem('currentCluster')
             let url = 'http://flask-gateway:8000' + "/k8s"+"/get_namespace_list" 
             let headers = {"cluster_name": cluster }
@@ -164,6 +164,10 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // this.$bus.$on('clusterChange', ()=> {
+        //     console.log("集群改变触发了namespace更新")
+        //     this.refresh()
+        // })
     }
 }
 </script>
