@@ -16,7 +16,7 @@
 
 <script>
 import axios from 'axios';
- import { cluster_list } from  '@/api'
+ import { cluster_list,cluster_enable,cluster_disable } from  '@/api'
 export default {
     name: 'ClusterList',
     data() {
@@ -54,9 +54,11 @@ export default {
     methods: {
         enable(index) {
             let id = this.clusterList[index].id;
+            let data = {"id":id}
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/frontend_k8s/"+id+"/cluster_enable",
+                url: cluster_enable,
+                data: data,
 
             }).then( (response) => {
                 console.log(response.data);
@@ -68,9 +70,11 @@ export default {
         },
         disable(index) {
             let id = this.clusterList[index].id;
+            let data = {"id":id }
             axios({
                 method: 'post',
-                url: 'http://flask-admin:8081' + "/frontend_k8s/"+id+"/cluster_disable",
+                url: cluster_disable,
+                data: data,
             }).then( (response) => {
                 console.log(response.data);
                 // this.$router.go(0)

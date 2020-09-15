@@ -29,7 +29,7 @@
 
 <script>
 import axios from 'axios';
-import { get_env_by_project_name,get_cluster_by_env_name,create_namespace } from  '@/api'
+import { get_env_by_project_name,get_cluster_by_env_name,create_namespace,get_project_env } from  '@/api'
 // import store from '@/store'
 
 export default {
@@ -138,7 +138,7 @@ export default {
             }  
         },
         get_project() {
-            let url = create_namespace
+            let url = get_project_env
             let method='post'
             axios({
                 url:url,method:method
@@ -163,7 +163,7 @@ export default {
             }
             let data = {"project_name":this.project_name,"env_name":this.env_name,"cluster_name":this.cluster,"istio_inject":istio_inject}
             let cluster = localStorage.getItem('currentCluster')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/create_namespace" 
+            let url = create_namespace
             let headers = {"cluster_name": cluster }
             let method='post'
             if(cluster){

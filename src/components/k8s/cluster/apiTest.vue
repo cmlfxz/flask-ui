@@ -20,11 +20,12 @@ export default {
     methods: {
         ApiTest() {
             let cluster = localStorage.getItem('currentCluster')
-            let namespace = localStorage.getItem('currentNameSpace')
-            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_event_list" 
+            // let namespace = localStorage.getItem('currentNameSpace')
+            let url = 'http://flask-gateway:8000' + "/k8s"+"/get_role_detail" 
             let headers = {"cluster_name": cluster }
             let method='post'
-            let data = {"namespace":namespace}
+            // let data = {'name':'admin'}
+            let data = {"namespace":'kube-system','name':'prometheus-k8s'}
             if(cluster){
                 axios({
                     url:url,data:data,headers: headers,method:method

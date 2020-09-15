@@ -61,6 +61,14 @@
                         <MenuItem name="job" :to="{ name: 'job'}">批处理任务</MenuItem>
                         <MenuItem name="cronjob" :to="{ name: 'cronjob'}">定时任务</MenuItem>
                     </Submenu>
+                    <Submenu name="auth">
+                        <template slot="title"><Icon type="ios-clock" />权限管理</template>
+                        <MenuItem name="serviceAccount" :to="{ name: 'serviceAccount'}">账号管理</MenuItem>
+                        <MenuItem name="clusterRole" :to="{ name: 'clusterRole'}">集群角色</MenuItem>
+                        <MenuItem name="clusterRoleBinding" :to="{ name: 'clusterRoleBinding'}">集群角色绑定</MenuItem>
+                        <MenuItem name="role" :to="{ name: 'role'}">普通角色</MenuItem>
+                        <MenuItem name="roleBinding" :to="{ name: 'roleBinding'}">普通角色绑定</MenuItem>
+                    </Submenu>
                     <Submenu name="setting">
                         <template slot="title"><Icon type="md-settings" />系统配置</template>
                         <MenuItem name="env" :to="{ name: 'env'}">环境管理</MenuItem>
@@ -137,11 +145,12 @@
                 openNames:[],
                 // 配置显示集群的页面
                 show_cluster_page_list:['namespace','clusterDetail','nodeDetail','nodeManage','componentStatus','eventList','apiTest','storageClass','pv','pvc','deployment','scan',
-                    'pod','hpa','configMap','secret','daemonSet','statefulSet','networkPolicy','istioPolicy','gateway','virtualService','destinationRule','ingress','service','job','cronjob','',''
+                    'pod','hpa','configMap','secret','daemonSet','statefulSet','networkPolicy','istioPolicy','gateway','virtualService','destinationRule','ingress','service','job','cronjob','serviceAccount',
+                    'clusterRole','clusterRoleBinding','role','roleBinding'
                 ],
                 // 配置显示命名空间的页面
                 show_namespace_page_list:['eventList','apiTest','pvc','deployment','scan','pod','hpa','configMap','secret','daemonSet','statefulSet','networkPolicy','istioPolicy','gateway',
-                    'virtualService','destinationRule','ingress','service','job','cronjob'
+                    'virtualService','destinationRule','ingress','service','job','cronjob','serviceAccount','role','roleBinding'
                 ],
                 // 为了扔集群、命名空间改变可以刷新页面
                 isRouterAlive: true,

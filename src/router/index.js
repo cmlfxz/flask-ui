@@ -36,6 +36,7 @@ const routes = [
         redirect: '/home',
         component: Main,
         children: [
+
             {
                 path: '/home',
                 name: 'home',
@@ -68,7 +69,42 @@ const routes = [
                 name: 'postDetail',
                 component: () =>import ('@/components/post/postDetail.vue'),
             },
-
+            // auth 
+            {
+                path: '/serviceAccount',
+                name: 'serviceAccount',
+                component:resolve=>{require(['@/components/k8s/auth/serviceAccount'],resolve);}
+            },
+            {
+                path: '/clusterRole',
+                name: 'clusterRole',
+                component:resolve=>{require(['@/components/k8s/auth/clusterRole'],resolve);}
+            },
+            {
+                path: '/clusterRoleDetail',
+                name: 'clusterRoleDetail',
+                component:resolve=>{require(['@/components/k8s/auth/clusterRoleDetail'],resolve);}
+            },
+            {
+                path: '/clusterRoleBinding',
+                name: 'clusterRoleBinding',
+                component:resolve=>{require(['@/components/k8s/auth/clusterRoleBinding'],resolve);}
+            },
+            {
+                path: '/role',
+                name: 'role',
+                component:resolve=>{require(['@/components/k8s/auth/role'],resolve);}
+            },
+            {
+                path: '/roleDetail',
+                name: 'roleDetail',
+                component:resolve=>{require(['@/components/k8s/auth/roleDetail'],resolve);}
+            },
+            {
+                path: '/roleBinding',
+                name: 'roleBinding',
+                component:resolve=>{require(['@/components/k8s/auth/roleBinding'],resolve);}
+            },
             // cluster
             {
                 path: '/createCluster',
