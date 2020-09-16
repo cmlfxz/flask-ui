@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf flask-ui
 
-git clone https://cmlfxz:dugu16829987@gitee.com/cmlfxz/flask.git
+git clone https://cmlfxz:dugu16829987@gitee.com/cmlfxz/flask-ui.git
 #git checkout release-0.2
 #git rev-parse --short HEAD
 
