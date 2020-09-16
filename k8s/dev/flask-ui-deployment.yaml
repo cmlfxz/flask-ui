@@ -56,38 +56,37 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-        # volumeMounts:
-        # - name: log
-        #   mountPath: /opt/microservices/logs
-
-      # - name: filebeat
-      #   image: myhub.mydocker.com/elk/filebeat:6.7.0
-      #   args: [
-      #     "-c", "/etc/filebeat.yml",
-      #     "-e",
-      #   ]
-      #   resources:
-      #     limits:
-      #       cpu: 300m
-      #       memory: 200Mi
-      #     requests:
-      #       cpu: 100m
-      #       memory: 100Mi
-      #   securityContext:
-      #     runAsUser: 0
-        # volumeMounts:
-        # #挂载filebeat.yml(在configmap中)
-        # - name: filebeat-config
-        #   mountPath: /etc/filebeat.yml
-        #   subPath: filebeat.yml
-        # - name: log
-        #   mountPath: /opt/microservices/logs
-      # volumes:
+        volumeMounts:
+        - name: log
+          mountPath: /home/logs/flask-ui
+      - name: filebeat
+        image: myhub.mydocker.com/elk/filebeat:6.7.0
+        args: [
+          "-c", "/etc/filebeat.yml",
+          "-e",
+        ]
+        resources:
+          limits:
+            cpu: 300m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+        #挂载filebeat.yml(在configmap中)
+        - name: filebeat-config
+          mountPath: /etc/filebeat.yml
+          subPath: filebeat.yml
+        - name: log
+          mountPath: /home/logs/flask-ui
+      volumes:
       # - name: fromfile-configmap
       #   configMap:
       #     name: flask-ui-configmap
-      # - name: log
-      #   emptyDir: {}
-      # - name: filebeat-config
-      #   configMap:
-      #     name: flask-ui-filebeat
+      - name: log
+        emptyDir: {}
+      - name: filebeat-config
+        configMap:
+          name: flask-ui-filebeat

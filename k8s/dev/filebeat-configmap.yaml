@@ -8,14 +8,10 @@ data:
     filebeat.prospectors:
     - type: log
       paths:
-        - /opt/microservices/logs/*.log
+        - /home/logs/flask-ui/*.log
       fields:
         env:  dev
         type: flask-ui
       fields_under_root: true
-      multiline:
-        pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
-        negate: true
-        match: after
     output.logstash:
       hosts: ['logstash-svc.elk:5044']
