@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-ui
+  namespace: ms-dev
+  labels:
+    app: flask-ui
+    service: flask-ui
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: flask-ui
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flask-ui-sa
+  namespace: ms-dev
+  labels:
+    account: flask-ui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-ui
+  namespace: ms-dev
+  labels:
+    app: flask-ui
+spec:
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      #更新时允许最大激增的容器数
+      maxSurge: 1
+      #更新时允许最大unavailable的容器数
+      maxUnavailable: 0
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-ui
+  template:
+    metadata:
+      labels:
+        app: flask-ui
+    spec:
+      serviceAccountName: flask-ui-sa
+      imagePullSecrets: 
+      - name: harborsecret 
+      containers:
+      - name: flask-ui
+        image: myhub.mydocker.com/ms-dev/flask-ui:47276bd
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        # volumeMounts:
+        # - name: log
+        #   mountPath: /opt/microservices/logs
+
+      - name: filebeat
+        image: myhub.mydocker.com/elk/filebeat:6.7.0
+        args: [
+          "-c", "/etc/filebeat.yml",
+          "-e",
+        ]
+        resources:
+          limits:
+            cpu: 300m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        securityContext:
+          runAsUser: 0
+        # volumeMounts:
+        # #挂载filebeat.yml(在configmap中)
+        # - name: filebeat-config
+        #   mountPath: /etc/filebeat.yml
+        #   subPath: filebeat.yml
+        # - name: log
+        #   mountPath: /opt/microservices/logs
+      # volumes:
+      # - name: fromfile-configmap
+      #   configMap:
+      #     name: flask-ui-configmap
+      # - name: log
+      #   emptyDir: {}
+      # - name: filebeat-config
+      #   configMap:
+      #     name: flask-ui-filebeat

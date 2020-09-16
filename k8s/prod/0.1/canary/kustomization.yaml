@@ -1,0 +1,5 @@
+namespace: ms-prod
+resources:
+- flask-ui-dr.yaml
+- flask-ui-vs.yaml
+- flask-ui-gateway.yaml

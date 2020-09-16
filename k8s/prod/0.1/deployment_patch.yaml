@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-ui-1.7
+  namespace: ms-prod
+spec:
+  template:
+    spec:
+      containers:
+        - name: flask-ui
+          env:
+            - name: ENV 
+              value: "PRODUCTION"
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: mysql_username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: mysql_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: redis_password
+            - name: ACCESS_ID
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: access_id
+            - name: ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: access_secret
+          livenessProbe:
+            tcpSocket:
+            # httpGet:
+              # path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+            # httpGet:
+            #   path: /
+              port: 80
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            timeoutSeconds: 5

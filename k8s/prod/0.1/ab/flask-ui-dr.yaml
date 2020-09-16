@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: flask-ui-dr
+  namespace: ms-prod
+spec:
+  host: flask-ui
+  subsets:
+  - name: prod
+    labels:
+      version: "1.6"
+  - name: canary
+    labels:
+      version: "1.7"

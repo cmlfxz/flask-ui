@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-ui
+  namespace: ms-dev
+spec:
+  template:
+    spec:
+      containers:
+        - name: flask-ui
+          env:
+            - name: ENV 
+              value: "DEVELOPMENT"
+            - name: SERVICE_NAME
+              value: flask-ui
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            # - name: aliyun_logs_flask-ui-stdout
+            #   value: "stdout"
+            # - name: aliyun_logs_flask-ui-file
+            #   value: "/opt/microservices/logs/*.log"
+          livenessProbe:
+            #httpGet:
+            #  path: /
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            #httpGet:
+            #  path: /
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5

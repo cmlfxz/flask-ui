@@ -1,0 +1,10 @@
+namespace: ms-prod
+resources:
+- flask-ui-deployment.yaml
+- flask-ui-service.yaml
+- secrets.yaml
+- hpa.yaml
+
+
+patchesStrategicMerge:
+- deployment_patch.yaml

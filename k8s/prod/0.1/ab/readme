@@ -1,0 +1,6 @@
+ms-gateway.yaml:  外部域名访问，假如服务需要对外暴露,类似于内部网关的这种，需要同时配置此文件，提供外部访问的AB或者灰度
+
+
+flask-ui-vs.yaml: 是提供内部service+serviceport访问，采取的策略可以和ms-gateway相同，也可以不同
+
+不合理 暂时不管 实现header 根据header进行流量负载

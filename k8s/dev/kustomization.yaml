@@ -1,0 +1,9 @@
+resources:
+- flask-ui-deployment.yaml
+# - flask-ui-vs.yaml
+# - filebeat-configmap.yaml
+# - flask-ui-dr.yaml
+
+- flask-ui-gateway.yaml
+patchesStrategicMerge:
+- deployment_patch.yaml
