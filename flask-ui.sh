@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf flask-ui
 
-git clone https://cmlfxz:dugu16829987@gitee.com/cmlfxz/flask-ui.git
+git clone https://cmlfxz:dugu16829987@gitee.com/cmlfxz/flask.git
 #git checkout release-0.2
 #git rev-parse --short HEAD
 
@@ -49,12 +49,15 @@ input_canary() {
 if [ "$1" == "dev" ];then
     cd $service
     git checkout develop
-    cd k8s
+    
     #tag=commit id 
     tag=$(git rev-parse --short HEAD)
     echo "$tag"
     # 变量 环境 项目 服务名  副本数 仓库地址 (tag)
+    npm install --registry=https://registry.npm.taobao.org
+    npm run test
     docker login -u $harbor_user -p $harbor_pass $harbor_registry
+    cd k8s
     sh  build.sh --action=build --env=$env --project=$project --service=$service --tag=$tag --harbor_registry=$harbor_registry
     if [ "$?" -ne 0 ];then
         echo "build 失败" && exit 1
@@ -72,8 +75,11 @@ elif [ "$1" == "prod" ];then
     fi
     echo "$tag"
     git checkout $tag
-    cd k8s
+
+    npm install --registry=https://registry.npm.taobao.org
+    npm run prod
     docker login -u $harbor_user -p $harbor_pass $harbor_registry
+    cd k8s
     sh  build.sh --action=build --env=$env --project=$project --service=$service --tag=$tag --harbor_registry=$harbor_registry
     if [ "$?" -ne 0 ];then
       echo "build 失败" && exit 1

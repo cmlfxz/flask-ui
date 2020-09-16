@@ -85,6 +85,9 @@ pipeline {
                 echo  "$TAG, $ENV" 
                 withCredentials([usernamePassword(credentialsId: "$DOCKER_HUB_ID", passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]){
                     sh '''
+                        cd $WORKSPACE
+                        npm install --registry=https://registry.npm.taobao.org
+                        npm run prod
                         docker login -u ${dockerHubUser} -p ${dockerHubPassword} $HARBOR_REGISTRY
                         cd $WORKSPACE/k8s/
                         sh build.sh --action=build --env=$ENV --project=$PROJECT --service=$SERVICE --tag=$TAG --harbor_registry=$HARBOR_REGISTRY
