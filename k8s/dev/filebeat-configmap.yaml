@@ -11,7 +11,8 @@ data:
         - /home/logs/flask-ui/*.log
       fields:
         env:  dev
-        type: flask-ui
+        type: nginx
+        service: flask-ui
       fields_under_root: true
     output.logstash:
       hosts: ['logstash-svc.elk:5044']

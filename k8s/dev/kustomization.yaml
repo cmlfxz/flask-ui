@@ -1,7 +1,7 @@
 resources:
 - flask-ui-deployment.yaml
 # - flask-ui-vs.yaml
-# - filebeat-configmap.yaml
+- filebeat-configmap.yaml
 # - flask-ui-dr.yaml
 
 - flask-ui-gateway.yaml
