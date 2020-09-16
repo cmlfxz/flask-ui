@@ -378,6 +378,10 @@
 
         },
         mounted: function() {
+            console.log("process",process,"NODE_ENV:",process.env.NODE_ENV,"VUE_APP_VUE_MODE:",process.env.VUE_MODE,"VUE_APP_API_URL:",process.env.VUE_APP_API_URL)
+            // console.log("process",process)
+            console.log("process.env",process.env)
+            console.log("process.env.NODE_ENV",process.env.NODE_ENV)
             // console.log('mounted')
             // 重新设置左侧子菜单
             let openNames = localStorage.getItem("openNames")

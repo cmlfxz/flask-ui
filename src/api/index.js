@@ -1,28 +1,27 @@
-let  adminServer = 'http://flask-admin:8081'
-// let  gateway = 'http://flask-gateway:8000'
 
-let  gateway = 'http://flask-backend.kkkk.com'
-export const  loginUrl = adminServer + "/auth"+"/login"
+let  gateway = process.env.VUE_APP_API_URL
+
+export const  loginUrl = gateway + "/auth"+"/login"
 
 // admin
-export const get_cluster_name_list = adminServer + "/admin"+"/get_cluster_name_list";
-export const cluster_list = adminServer + "/admin"+"/cluster_list"
-export const cluster_enable = adminServer + "/admin"+"/cluster_enable"
-export const cluster_disable = adminServer + "/admin"+"/cluster_disable"
-export const cluster_create = adminServer + "/admin"+"/cluster_create"
+export const get_cluster_name_list = gateway + "/admin"+"/get_cluster_name_list";
+export const cluster_list = gateway + "/admin"+"/cluster_list"
+export const cluster_enable = gateway + "/admin"+"/cluster_enable"
+export const cluster_disable = gateway + "/admin"+"/cluster_disable"
+export const cluster_create = gateway + "/admin"+"/cluster_create"
 
-export const get_project_env = adminServer + "/admin"+"/get_project_env"
-export const get_env_by_project_name = adminServer + "/admin"+"/get_env_by_project_name";
-export const get_cluster_by_env_name = adminServer + "/admin"+"/get_cluster_by_env_name";
-export const get_project_list = adminServer + "/admin"+"/get_project_list";
-export const get_env_list = adminServer +  "/admin"+"/get_env_list" 
+export const get_project_env = gateway + "/admin"+"/get_project_env"
+export const get_env_by_project_name = gateway + "/admin"+"/get_env_by_project_name";
+export const get_cluster_by_env_name = gateway + "/admin"+"/get_cluster_by_env_name";
+export const get_project_list = gateway + "/admin"+"/get_project_list";
+export const get_env_list = gateway +  "/admin"+"/get_env_list" 
 
 //blog
-export const blog_delete = adminServer + "/blog"+"/delete";
-export const blog_detail = adminServer + "/blog"+"/detail";
-export const blog_add = adminServer + "/blog"+"/add";
-export const blog_update= adminServer + "/blog"+"/update";
-export const blog_list= adminServer + "/blog"+"/list";
+export const blog_delete = gateway + "/blog"+"/delete";
+export const blog_detail = gateway + "/blog"+"/detail";
+export const blog_add = gateway + "/blog"+"/add";
+export const blog_update= gateway + "/blog"+"/update";
+export const blog_list= gateway + "/blog"+"/list";
 
 // import { get_service_account_list,delete_service_account } from  '@/api'
 // auth 
