@@ -20,7 +20,7 @@ pipeline {
         )
         string (
             name: 'URL',
-            defaultValue: 'https://gitee.com/cmlfxz/flask.git',
+            defaultValue: 'https://gitee.com/cmlfxz/flask-ui.git',
             description: 'git url'
         )
 

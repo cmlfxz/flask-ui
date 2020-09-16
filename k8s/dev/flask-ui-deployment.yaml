@@ -60,21 +60,21 @@ spec:
         # - name: log
         #   mountPath: /opt/microservices/logs
 
-      - name: filebeat
-        image: myhub.mydocker.com/elk/filebeat:6.7.0
-        args: [
-          "-c", "/etc/filebeat.yml",
-          "-e",
-        ]
-        resources:
-          limits:
-            cpu: 300m
-            memory: 200Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        securityContext:
-          runAsUser: 0
+      # - name: filebeat
+      #   image: myhub.mydocker.com/elk/filebeat:6.7.0
+      #   args: [
+      #     "-c", "/etc/filebeat.yml",
+      #     "-e",
+      #   ]
+      #   resources:
+      #     limits:
+      #       cpu: 300m
+      #       memory: 200Mi
+      #     requests:
+      #       cpu: 100m
+      #       memory: 100Mi
+      #   securityContext:
+      #     runAsUser: 0
         # volumeMounts:
         # #挂载filebeat.yml(在configmap中)
         # - name: filebeat-config
