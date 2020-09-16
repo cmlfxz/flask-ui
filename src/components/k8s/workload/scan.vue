@@ -27,7 +27,7 @@ import { get_deployment_list,get_daemonset_list,get_statefulset_list,get_service
 export default {
     data() {
         return {
-            height: "300",
+            height: "500",
             deployment: [
                 {
                     title: '名字',key: 'name'

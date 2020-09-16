@@ -5,7 +5,7 @@
             <Sider class="sidebar" ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <!-- <Menu active-name="1" theme="dark" width="auto" :class="menuitemClasses"> --> 
                     <!-- :open-names="['app']"   -->
-                    <Menu  ref="sideBarMenu"   :open-names="openNames"  :theme="theme2" width="auto" :active-name="activeMenuItem" @on-select="menuItemSelect" @on-open-change="openChange" :class="menuitemClasses"  accordion>
+                    <Menu  ref="sideBarMenu"   :open-names="openNames"  :theme="theme2" width="auto" :active-name="activeMenuItem" @on-select="menuItemSelect"  @on-open-change="openChange" :class="menuitemClasses"  accordion>
                     <Submenu name="post">
                         <template slot="title"> <Icon type="ios-book" /> 笔记</template>
                         <MenuItem name="postList" :to="{ name: 'postList'}">笔记列表</MenuItem>
@@ -361,10 +361,11 @@
                 // 并且保存到缓存
                 localStorage.setItem("activeMenuItem",name)
             },
-            // 子菜单选择事件
+            // 子菜单展开收起事件
             openChange(name) {
-                // alert(name)
-                this.openNames=[name]
+                this.openNames=name
+                // 错误的用法
+                // this.openNames=[name]
                 localStorage.setItem("openNames",name)
             }
 
@@ -380,8 +381,12 @@
             // console.log('mounted')
             // 重新设置左侧子菜单
             let openNames = localStorage.getItem("openNames")
+            // console.log("获取到的缓存openNames:",openNames,typeof openNames)
             if(openNames){
-                this.openNames= [openNames]
+                // this.openNames = [openNames]
+                this.openNames = []
+                this.openNames.push(openNames)
+                // console.log("重设openNames:",this.openNames,typeof this.openNames)
                 this.$nextTick(()=>{
                     this.$refs.sideBarMenu.updateOpened();
                 })
@@ -476,7 +481,7 @@
         margin-right: 25px;
     }
     .sidebar {
-        font-weight: 550;
+        /* font-weight: 550; */
         font-family:Arial, Helvetica, sans-serif;
     }
 </style>

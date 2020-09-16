@@ -1,23 +1,21 @@
 let  adminServer = 'http://flask-admin:8081'
-let  gateway = 'http://flask-gateway:8000'
+// let  gateway = 'http://flask-gateway:8000'
+
+let  gateway = 'http://flask-backend.kkkk.com'
 export const  loginUrl = adminServer + "/auth"+"/login"
 
+// admin
+export const get_cluster_name_list = adminServer + "/admin"+"/get_cluster_name_list";
+export const cluster_list = adminServer + "/admin"+"/cluster_list"
+export const cluster_enable = adminServer + "/admin"+"/cluster_enable"
+export const cluster_disable = adminServer + "/admin"+"/cluster_disable"
+export const cluster_create = adminServer + "/admin"+"/cluster_create"
 
-
-
-// frontend_k8s
-export const get_cluster_name_list = adminServer + "/frontend_k8s"+"/get_cluster_name_list";
-export const cluster_list = adminServer + "/frontend_k8s"+"/cluster_list"
-export const cluster_enable = adminServer + "/frontend_k8s"+"/cluster_enable"
-export const cluster_disable = adminServer + "/frontend_k8s"+"/cluster_disable"
-export const cluster_create = adminServer + "/frontend_k8s"+"/cluster_create"
-
-export const get_project_env = adminServer + "/frontend_k8s"+"/get_project_env"
-export const get_env_by_project_name = adminServer + "/frontend_k8s"+"/get_env_by_project_name";
-export const get_cluster_by_env_name = adminServer + "/frontend_k8s"+"/get_cluster_by_env_name";
-export const create_namespace = adminServer + "/frontend_k8s"+"/create_namespace";
-export const get_project_list = adminServer + "/frontend_k8s"+"/get_project_list";
-export const get_env_list = adminServer +  "/frontend_k8s"+"/get_env_list" 
+export const get_project_env = adminServer + "/admin"+"/get_project_env"
+export const get_env_by_project_name = adminServer + "/admin"+"/get_env_by_project_name";
+export const get_cluster_by_env_name = adminServer + "/admin"+"/get_cluster_by_env_name";
+export const get_project_list = adminServer + "/admin"+"/get_project_list";
+export const get_env_list = adminServer +  "/admin"+"/get_env_list" 
 
 //blog
 export const blog_delete = adminServer + "/blog"+"/delete";
@@ -52,6 +50,7 @@ export const get_role_detail = gateway + "/k8s"+"/get_role_detail"
 // istio
 
 // cluster
+export const create_namespace = gateway + "/k8s"+"/create_namespace";
 export const get_component_status_list  = gateway + "/k8s"+"/get_component_status_list"
 
 export const get_namespace_name_list =  gateway + "/k8s"+"/get_namespace_name_list";
