@@ -68,7 +68,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: "$DOCKER_HUB_ID", passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]){
                     sh '''
                         cd $WORKSPACE
-                        npm install --registry=https://registry.npm.taobao.org
+                        npm install --registry=https://registry.npm.taobao.org || true
                         npm run test
                         docker login -u ${dockerHubUser} -p ${dockerHubPassword} $HARBOR_REGISTRY
                         cd $WORKSPACE/k8s/
