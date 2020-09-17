@@ -493,12 +493,12 @@
         transition: font-size .2s ease .2s, transform .2s ease .2s;
         vertical-align: middle;
         font-size: 22px;
-    }
+    }*/
     .header-right {
         position: absolute;
         right: 0;
         margin-right: 25px;
-    } */
+    } 
     .sidebar {
         /* font-weight: 550; */
         font-family:Arial, Helvetica, sans-serif;

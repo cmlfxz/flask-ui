@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe :columns="format" :data="show_list" height="780">
+        <i-table border stripe :columns="format" :data="show_list" height="800">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" size="default" style="margin-left: 5px;"  @click="del_configmap(index)">删除</Button>
             </template>
@@ -65,7 +65,7 @@ export default {
             show_list: [],
             // 分页
             total: 0,
-            pageSize: 15,
+            pageSize: 10,
         }
     },
     methods: {
@@ -124,6 +124,7 @@ export default {
     },
     mounted: function() {
         this.refresh();
+        // document.documentElement.style.overflow = 'hidden'
     }
 }
 </script>
