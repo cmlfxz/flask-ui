@@ -209,10 +209,34 @@ export default {
                     title: '命名空间',key: 'namespace'
                 },
                 {
-                    title: 'info',key: 'info',
+                    title: 'status',key: 'status',width: 280,
                     render: (h, params) => {
                         return h('div', [
-                            h('pre', JSON.stringify(params.row.info,undefined,4))
+                            h('pre', JSON.stringify(params.row.status,undefined,4))
+                        ]);
+                    }
+                },
+                {
+                    title: 'labels',key: 'labels',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.labels,undefined,4))
+                        ]);
+                    }
+                },
+                {
+                    title: 'image',key: 'image',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.image,undefined,4))
+                        ]);
+                    }
+                },
+                {
+                    title: 'node_selector',key: 'node_selector',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.node_selector,undefined,4))
                         ]);
                     }
                 },

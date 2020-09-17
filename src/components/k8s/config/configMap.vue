@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe :columns="format" :data="show_list" height="760">
+        <i-table border stripe :columns="format" :data="show_list" height="780">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" size="default" style="margin-left: 5px;"  @click="del_configmap(index)">删除</Button>
             </template>
@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios';
 import { delete_configmap,get_configmap_list } from  '@/api'
+import { delete_namespace_resource } from '@/common/util.js'
 // import store from '@/store'
 
 export default {
@@ -76,35 +77,12 @@ export default {
             this.$router.push({name: 'configMapDetail',query: {name: params.row.name,cluster_name: cluster,namespace: namespace}})
         },
         del_configmap(index){
-            // console.log(index)
             let name = this.show_list[index].name
-            let result = confirm("确定要删除"+name+"服务吗?")
+            let result = confirm("确定要删除"+name+"吗?")
             if(result == false) return 
-            let cluster = localStorage.getItem('currentCluster')
-            let namespace = localStorage.getItem('currentNameSpace')
-            let headers = {"cluster_name": cluster }
-            if (namespace =='' || namespace == 'all'){
-                alert("去选择具体的namespace")
-                return
-            }
-            let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = delete_configmap
-            let method='post'
-            if(cluster){
-                axios({
-                    url:url,headers: headers,data:data,method:method
-                }).then( (response) => {
-                    let info = JSON.stringify(response.data)
-                    if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除configmap成功')
-                        this.refresh()
-                    }else {
-                        alert(info)
-                    }
-                }).catch(function (error){
-                    console.log(error)
-                })
-            }
+            let namespace = this.show_list[index].namespace
+            delete_namespace_resource(namespace,name,delete_configmap)
+            this.refresh()
         },
         changePage(index) {
             console.log("change this.$refs.page.current",this.$refs.page.current)

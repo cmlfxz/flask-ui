@@ -8,6 +8,9 @@
                 <Button type="error"   @click="del_label(index)">删标签</Button> 
             </template>
         </i-table>
+        <!-- <div style="text-align: center;margin-top: 10px;">
+            <Page ref="page" :total="total" :page-size="pageSize"  @on-change="changePage" show-total/>
+        </div> -->
         <!-- 添加污点模态框 -->
         <Modal v-model="show_add_taint_modal" width="600">
             <p slot="header" style="color:#f60;text-align:center">

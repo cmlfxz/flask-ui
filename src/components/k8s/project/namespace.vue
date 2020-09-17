@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe ref="namespace_table" :columns="format" :data="show_list">
+        <i-table border stripe ref="namespace_table" :columns="format" :data="show_list" height="800">
             <template slot-scope="{ row, index }" slot="action">
 
                 <Button  v-if="test_inject(index)" type="primary" size="default" @click="cacel_inject(index)">取消注入</Button>

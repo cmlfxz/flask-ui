@@ -71,7 +71,7 @@ export const get_node_detail_list_v2 = gateway+ "/k8s"+"/get_node_detail_list_v2
 export const get_cm_detail = gateway + "/k8s"+"/get_cm_detail" 
 export const delete_configmap = gateway + "/k8s"+"/delete_configmap" 
 export const get_configmap_list = gateway +  "/k8s"+"/get_configmap_list" 
-export const delete_secrett = gateway +  "/k8s"+"/delete_secrett" 
+export const delete_secret = gateway +  "/k8s"+"/delete_secret" 
 export const get_secret_list = gateway +  "/k8s"+"/get_secret_list" 
 
 

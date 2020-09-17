@@ -5,17 +5,17 @@
         <h2>Service</h2>
         <i-table border stripe  :columns="service" :data="service_list"  :height="height"></i-table >
         <h2>DestinationRule</h2>
-        <i-table border stripe  :columns="destination_rule" :data="destination_rule_list"  :height="height"></i-table >
+        <i-table border stripe  :columns="destination_rule" :data="destination_rule_list"  :height="200"></i-table >
         <h2>VirtualService</h2>
         <i-table border stripe  :columns="virtual_service" :data="virtual_service_list" :height="height" ></i-table >
         <h2>Gateway</h2>
         <i-table border stripe  :columns="gateway" :data="gateway_list"  :height="height"></i-table >
         <h2>Ingress</h2>
-        <i-table border stripe  :columns="ingress" :data="ingress_list" :height="height" ></i-table >
+        <i-table border stripe  :columns="ingress" :data="ingress_list" :height="200" ></i-table >
         <h2>DaemonSet</h2>
-        <i-table border stripe  :columns="daemonset" :data="daemonset_list" :height="height"></i-table >
+        <i-table border stripe  :columns="daemonset" :data="daemonset_list" :height="200"></i-table >
         <h2>StatefulSet</h2>
-        <i-table border stripe  :columns="statefulset" :data="statefulset_list"  :height="height"></i-table >
+        <i-table border stripe  :columns="statefulset" :data="statefulset_list"  :height="200"></i-table >
     </div>
 </template>
 
@@ -27,7 +27,7 @@ import { get_deployment_list,get_daemonset_list,get_statefulset_list,get_service
 export default {
     data() {
         return {
-            height: "800",
+            height: "600",
             deployment: [
                 {
                     title: '名字',key: 'name'
@@ -36,13 +36,37 @@ export default {
                     title: '命名空间',key: 'namespace'
                 },
                 {
-                    title: 'info',key: 'info',
+                    title: 'status',key: 'status',width: 280,
                     render: (h, params) => {
                         return h('div', [
-                            h('pre', JSON.stringify(params.row.info,undefined,4))
+                            h('pre', JSON.stringify(params.row.status,undefined,4))
                         ]);
                     }
-                }
+                },
+                {
+                    title: 'labels',key: 'labels',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.labels,undefined,4))
+                        ]);
+                    }
+                },
+                {
+                    title: 'image',key: 'image',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.image,undefined,4))
+                        ]);
+                    }
+                },
+                {
+                    title: 'node_selector',key: 'node_selector',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('pre', JSON.stringify(params.row.node_selector,undefined,4))
+                        ]);
+                    }
+                },
             ],
             daemonset: [
                 {
