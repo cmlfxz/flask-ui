@@ -112,18 +112,18 @@ deploy_dev() {
 mod_yaml() {
     prod_weight=$(( 100 -$canary_weight))
     echo "canary_weight: $canary_weight prod_weight:$prod_weight"
-    if [ -f "$service-vs.yaml" ];then
-        sed -i  "s/\$canary_weight/$canary_weight/g"  $service-vs.yaml
-        sed -i  "s/\$prod_weight/$prod_weight/g"  $service-vs.yaml
-    else
-        echo "灰度文件$service-vs.yaml 不存在,请检查" && exit 1
-    fi
+    # if [ -f "$service-vs.yaml" ];then
+    #     sed -i  "s/\$canary_weight/$canary_weight/g"  $service-vs.yaml
+    #     sed -i  "s/\$prod_weight/$prod_weight/g"  $service-vs.yaml
+    # else
+    #     echo "灰度文件$service-vs.yaml 不存在,请检查" && exit 1
+    # fi
     #修改gateway文件，假如存在的话
     if [ -f "$service-gateway.yaml" ];then
         sed -i  "s/\$canary_weight/$canary_weight/g"  $service-gateway.yaml
         sed -i  "s/\$prod_weight/$prod_weight/g"  $service-gateway.yaml
     else
-        echo "灰度文件$service-gateway.yaml 不存在"
+        echo "灰度文件$service-gateway.yaml 不存在" && exit 1
         # exit 1
     fi  
 }
