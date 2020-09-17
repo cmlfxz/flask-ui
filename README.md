@@ -1,5 +1,5 @@
 
-<br>![WAI](https://gitee.com/cmlfxz/flask-ui/blob/master/image/1.png)<br>
+<br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/1.png)<br>
 
 <br>![image](https://gitee.com/cmlfxz/flask-ui/blob/master/image/2.jpg)<br>
 
