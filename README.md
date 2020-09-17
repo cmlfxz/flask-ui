@@ -23,6 +23,9 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+<br>![image](https://gitee.com/cmlfxz/flask-ui/blob/master/image/%E9%A6%96%E9%A1%B5.jpg)<br>
+
+
 首页
 <a>https://gitee.com/cmlfxz/flask-ui/blob/master/image/%E9%A6%96%E9%A1%B5.jpg</a>
 
@@ -33,8 +36,7 @@ https://gitee.com/cmlfxz/flask-ui/blob/master/image/%E9%A1%B9%E7%9B%AE%E7%AE%A1%
 https://gitee.com/cmlfxz/flask-ui/blob/master/image/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.jpg
 
 应用管理
-https://gitee.com/cmlfxz/flask-ui/blob/master/image/deployment%E7%AE%A1%E7%90%86.jpg
-
+https://gitee.com/cmlfxz/flask-ui/blob/master/image/%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86.jpg
 服务管理
 https://gitee.com/cmlfxz/flask-ui/blob/master/image/%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86.jpg
 
