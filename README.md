@@ -24,7 +24,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 首页
-<br>![image](https://gitee.com/cmlfxz/flask-ui/blob/master/image/1.jpg)<br>
+<br>![image](https://gitee.com/cmlfxz/flask-ui/blob/master/image/1.png)<br>
 项目管理
 <br>![image](https://gitee.com/cmlfxz/flask-ui/blob/master/image/2.jpg)<br>
 
