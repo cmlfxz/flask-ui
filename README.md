@@ -17,7 +17,7 @@
 
 
 项目微服务架构
-<br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/0.png)<br>
+<br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/0.jpg)<br>
 
 首页
 <br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/1.png)<br>
