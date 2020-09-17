@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table  :columns="format" :data="node_list">
+        <i-table  :columns="format" :data="node_list" height="760">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="primary"  style="margin-bottom: 5px " @click="add_taint(index)">增加污点</Button>
                 <Button type="error" style="margin-bottom: 5px "  @click="del_taint(index)">删除污点</Button>

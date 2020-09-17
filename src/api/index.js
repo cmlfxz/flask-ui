@@ -43,10 +43,20 @@ export const get_role_detail = gateway + "/k8s"+"/get_role_detail"
 // storage
 
 // security
+export const delete_istio_policy = gateway +  "/k8s"+"/get_virtual_service_list" 
+export const get_istio_policy_list = gateway +  "/k8s"+"/get_istio_policy_list" 
+export const delete_network_policy = gateway +  "/k8s"+"/delete_network_policy" 
+export const get_network_policy_list = gateway +  "/k8s"+"/get_network_policy_list" 
 
 // servcie
 
 // istio
+export const get_virtual_service_list = gateway +  "/k8s"+"/get_virtual_service_list" 
+export const delete_vs= gateway +  "/k8s"+"/delete_vs" 
+export const update_vs= gateway +  "/k8s"+"/update_vs" 
+export const get_gateway_list = gateway +  "/k8s"+"/get_gateway_list" 
+export const get_destination_rule_list = gateway +  "/k8s"+"/get_destination_rule_list" 
+
 
 // cluster
 export const create_namespace = gateway + "/k8s"+"/create_namespace";
@@ -68,19 +78,15 @@ export const get_secret_list = gateway +  "/k8s"+"/get_secret_list"
 
 
 export const get_secret_detail = gateway +  "/k8s"+"/get_secret_detail" 
-export const get_gateway_list = gateway +  "/k8s"+"/get_gateway_list" 
-export const update_vs= gateway +  "/k8s"+"/update_vs" 
-export const get_virtual_service_list = gateway +  "/k8s"+"/get_virtual_service_list" 
-export const delete_virtual_service = gateway +  "/k8s"+"/delete_virtual_service" 
+
+
 
 export const get_namespace_list = gateway +  "/k8s"+"/get_namespace_list" 
 export const delete_namespace = gateway +  "/k8s"+"/delete_namespace" 
 export const update_namespace = gateway +  "/k8s"+"/update_namespace" 
-export const delete_istio_policy = gateway +  "/k8s"+"/get_virtual_service_list" 
-export const get_istio_policy_list = gateway +  "/k8s"+"/get_istio_policy_list" 
 
-export const delete_network_policy = gateway +  "/k8s"+"/delete_network_policy" 
-export const get_network_policy_list = gateway +  "/k8s"+"/get_network_policy_list" 
+
+
 
 export const delete_ingress = gateway +  "/k8s"+"/delete_ingress" 
 export const get_ingress_list = gateway +  "/k8s"+"/get_ingress_list" 
@@ -100,7 +106,7 @@ export const get_storageclass_list = gateway +  "/k8s"+"/get_storageclass_list"
 
 export const get_cronjob_list = gateway +  "/k8s"+"/get_cronjob_list"
 
-export const get_destination_rule_list = gateway +  "/k8s"+"/get_destination_rule_list" 
+
 
 export const delete_daemonset = gateway +  "/k8s"+"/delete_daemonset" 
 export const get_daemonset_list = gateway +  "/k8s"+"/get_daemonset_list" 

@@ -52,8 +52,6 @@ export default {
     },
     methods: {
         changePage(index) {
-            // console.log("change this.$refs.page.current",this.$refs.page.current)
-            // console.log("change this.$refs.page.currentPage",this.$refs.page.currentPage)
             let _start = (index -1) * this.pageSize
             let _end = index * this.pageSize
             this.show_list = this.total_list.slice(_start,_end)
@@ -69,7 +67,7 @@ export default {
                 axios({
                     url:url,headers: headers,data:data,method:method
                 }).then( (response) => {
-                  this.total_list = response.data
+                    this.total_list = response.data
                     this.total = response.data.length
                     if(this.total < this.pageSize) {
                         this.show_list = this.total_list
@@ -79,7 +77,6 @@ export default {
                         let _start = (currentPage-1) * this.pageSize
                         let _end = currentPage * this.pageSize
                         this.show_list = this.total_list.slice(_start,_end)
-                        // this.show_list = this.total_list.slice(0,this.pageSize)
                     }
                 }).catch(function (error){
                     console.log(error)

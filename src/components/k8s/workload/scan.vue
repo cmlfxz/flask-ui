@@ -2,20 +2,20 @@
     <div>
         <h2>Deployment</h2>
         <i-table border stripe  :columns="deployment" :data="deployment_list" :height="height"></i-table >
-        <h2>DaemonSet</h2>
-        <i-table border stripe  :columns="daemonset" :data="daemonset_list" :height="height"></i-table >
-        <h2>StatefulSet</h2>
-        <i-table border stripe  :columns="statefulset" :data="statefulset_list"  :height="height"></i-table >
         <h2>Service</h2>
         <i-table border stripe  :columns="service" :data="service_list"  :height="height"></i-table >
         <h2>DestinationRule</h2>
         <i-table border stripe  :columns="destination_rule" :data="destination_rule_list"  :height="height"></i-table >
         <h2>VirtualService</h2>
         <i-table border stripe  :columns="virtual_service" :data="virtual_service_list" :height="height" ></i-table >
-        <h2>Ingress</h2>
-        <i-table border stripe  :columns="ingress" :data="ingress_list" :height="height" ></i-table >
         <h2>Gateway</h2>
         <i-table border stripe  :columns="gateway" :data="gateway_list"  :height="height"></i-table >
+        <h2>Ingress</h2>
+        <i-table border stripe  :columns="ingress" :data="ingress_list" :height="height" ></i-table >
+        <h2>DaemonSet</h2>
+        <i-table border stripe  :columns="daemonset" :data="daemonset_list" :height="height"></i-table >
+        <h2>StatefulSet</h2>
+        <i-table border stripe  :columns="statefulset" :data="statefulset_list"  :height="height"></i-table >
     </div>
 </template>
 
@@ -27,7 +27,7 @@ import { get_deployment_list,get_daemonset_list,get_statefulset_list,get_service
 export default {
     data() {
         return {
-            height: "500",
+            height: "800",
             deployment: [
                 {
                     title: '名字',key: 'name'

@@ -10,6 +10,16 @@ table 多选  pv实现了
         //     console.log(this.selecteds)
         // },
 
+删除 role
+import { delete_namespace_resource } from '@/common/util.js'
+
+            let name = this.show_list[index].name
+            let result = confirm("确定要删除"+name+"吗?")
+            if(result == false) return 
+            let namespace = this.show_list[index].namespace
+            delete_namespace_resource(namespace,name,delete_role)
+            this.refresh()
+
 Form 表单验证 deployment.vue 提交添加亲和
 table td加链接： configMap
 json显示

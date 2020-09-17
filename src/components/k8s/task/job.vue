@@ -42,9 +42,9 @@ export default {
                 {
                     title: '创建时间',key: 'create_time'
                 },
-                {
-                    title: '操作',slot: 'action',align: 'center'
-                }
+                // {
+                //     title: '操作',slot: 'action',align: 'center'
+                // }
             ],
             show_list: [],
         }

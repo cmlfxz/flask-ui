@@ -19,6 +19,7 @@
 <script>
 import axios from 'axios';
  import { get_namespace_list,delete_namespace,update_namespace } from  '@/api'
+ import { delete_ns } from '@/common/util.js'
 // import store from '@/store'
 
 export default {
@@ -50,11 +51,6 @@ export default {
         }
     },
     methods: {
-        // 选项改变就会触发
-        // onSelect(selection){
-        //     this.selecteds = selection;
-        //     console.log(this.selecteds)
-        // },
         changePage(index) {
             console.log("change this.$refs.page.current",this.$refs.page.current)
             console.log("change this.$refs.page.currentPage",this.$refs.page.currentPage)
@@ -64,10 +60,6 @@ export default {
         },
         // bug 取消注入，refresh的页码并没有复原
         refresh() {
-            // console.log("ref",this.$refs)
-            // console.log("this.$refs.page.current",this.$refs.page.current)
-            // console.log("this.$refs.page.currentPage",this.$refs.page.currentPage)
-            // console.log("ref.page:",this.$refs.page)
             let cluster = localStorage.getItem('currentCluster')
             let url = get_namespace_list
             let headers = {"cluster_name": cluster }
@@ -99,28 +91,8 @@ export default {
             let name = this.show_list[index].name
             let result = confirm("确定要删除"+name+"吗?")
             if(result == false) return 
-            let cluster = localStorage.getItem('currentCluster')
-
-            let url = delete_namespace
-            let headers = {"cluster_name": cluster }
-            let data= {"name":name}
-            let method='post'
-            if(cluster){
-                axios({
-                    url:url,headers:headers,data:data,method:method
-                }).then( (response) => {
-                    console.log(response.data)
-                    let info = JSON.stringify(response.data)
-                    if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除namespace成功')
-                        this.refresh()
-                    }else {
-                        alert(info)
-                    }
-                }).catch(function (error){
-                    console.log(error)
-                })
-            }
+            delete_ns(name,delete_namespace)
+            this.refresh()
         },
         update_ns(index,action){
             let name = this.show_list[index].name

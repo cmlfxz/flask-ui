@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe  :columns="format" :data="show_list" height="840">
+        <i-table border stripe  :columns="format" :data="show_list" height="760">
             <template slot-scope="{ row, index }" slot="action">
                 <!-- <Button type="primary" style="margin-right: 5px "  @click="gray_release(index)">灰度发布</Button> -->
                 <Button  v-if="test_gray(index)" type="primary" style="margin-right: 5px;" @click="gray_release(index)">灰度发布</Button>
@@ -30,7 +30,8 @@
 
 <script>
 import axios from 'axios';
-import { update_vs,get_virtual_service_list,delete_virtual_service } from  '@/api'
+import { update_vs,get_virtual_service_list,delete_vs } from  '@/api'
+import { delete_namespace_resource } from '@/common/util.js'
 // import store from '@/store'
 
 export default {
@@ -150,35 +151,12 @@ export default {
         },
 
         del_virtual_service(index){
-            // console.log(index)
             let name = this.show_list[index].name
-            let result = confirm("确定要删除"+name+"服务吗?")
+            let result = confirm("确定要删除"+name+"吗?")
             if(result == false) return 
-            let cluster = localStorage.getItem('currentCluster')
-            let namespace = localStorage.getItem('currentNameSpace')
-            let headers = {"cluster_name": cluster }
-            if (namespace =='' || namespace == 'all'){
-                alert("去选择具体的namespace")
-                return
-            }
-            let data = JSON.stringify({"namespace":namespace,"name":name})
-            let url = delete_virtual_service
-            let method='post'
-            if(cluster){
-                axios({
-                    url:url,headers: headers,data:data,method:method
-                }).then( (response) => {
-                    let info = JSON.stringify(response.data)
-                    if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除virtual_service成功')
-                        this.refresh()
-                    }else {
-                        alert(info)
-                    }
-                }).catch(function (error){
-                    console.log(error)
-                })
-            }
+            let namespace = this.show_list[index].namespace
+            delete_namespace_resource(namespace,name,delete_vs)
+            this.refresh()
         },
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
@@ -201,12 +179,6 @@ export default {
     },
     mounted: function() {
         this.refresh();
-        // this.$bus.$on('clusterChange', ()=> {
-        //     this.refresh()
-        // })
-        // this.$bus.$on('namespaceChange', ()=> {
-        //     this.refresh()
-        // })
     }
 }
 </script>

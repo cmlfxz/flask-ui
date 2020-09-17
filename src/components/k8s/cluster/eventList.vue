@@ -3,7 +3,7 @@
         <i-table border stripe :columns="format" :data="event_list"></i-table >
         <div style="text-align: center;margin-top: 10px;">
             <!-- 大佬页码和每页数改变，要不要搞 -->
-            <Page :total="total" show-sizer show-elevator show-total/>
+            <!-- <Page :total="total" show-sizer show-elevator show-total/> -->
         </div>
     </div>
 </template>

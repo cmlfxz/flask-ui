@@ -169,6 +169,7 @@
 <script>
 import axios from 'axios';
 import { update_deploy_v2,delete_deploy,get_deployment_list} from  '@/api'
+import { delete_namespace_resource } from '@/common/util.js'
 // import store from '@/store'
 
 export default {
@@ -681,37 +682,13 @@ export default {
             if(result == false) return false
             for(let i=0;i<this.selecteds.length;i++){
                 let name = this.selecteds[i].name
-                this.delete_deploy(name)
+                let namespace = this.selecteds[i].namespace
+                // this.delete_deploy(namespace,name)
+                delete_namespace_resource(namespace,name,delete_deploy)
+                this.refresh()
             }
         },
-  
-      // 发起ajax请求，进行删除
-        delete_deploy(deploy_name){
-            let cluster = localStorage.getItem('currentCluster')
-            let namespace = localStorage.getItem('currentNameSpace')
 
-            let url = delete_deploy
-            let headers = {"cluster_name": cluster }
-            let data = JSON.stringify({"namespace":namespace,"deploy_name":deploy_name})
-            let method='post'
-            if(cluster){
-                axios({
-                    url:url,headers:headers,data:data,method:method
-                }).then( (response) => {
-                    console.log(response.data)
-                    let info = JSON.stringify(response.data)
-                    if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除'+deploy_name+'成功')
-                        this.refresh()
-                    }else {
-                        console.log('删除'+deploy_name+'失败'+'原因: ')
-                        alert(info)
-                    }
-                }).catch(function (error){
-                    console.log(error)
-                })
-            }
-        },
         // 多选框选项改变就会触发
         onSelect(selection){
             this.selecteds = selection;
@@ -749,8 +726,6 @@ export default {
                 axios({
                     url:url,headers: headers,data:data,method:method
                 }).then( (response) => {
-                    // console.log(response.data);
-                    // this.show_list = response.data
                    this.total_list = response.data
                     this.total = response.data.length
                     if(this.total < this.pageSize) {
@@ -761,7 +736,6 @@ export default {
                         let _start = (currentPage-1) * this.pageSize
                         let _end = currentPage * this.pageSize
                         this.show_list = this.total_list.slice(_start,_end)
-                        // this.show_list = this.total_list.slice(0,this.pageSize)
                     }
                 }).catch(function (error){
                     console.log(error)
@@ -771,14 +745,6 @@ export default {
     },
     mounted: function() {
         this.refresh();
-        // this.$bus.$on('clusterChange', ()=> {
-        //     console.log("集群改变触发了namespace更新")
-        //     this.refresh()
-        // })
-        // this.$bus.$on('namespaceChange', ()=> {
-        //     console.log("命名空间改变触发了namespace更新")
-        //     this.refresh()
-        // })
     }
 }
 </script>

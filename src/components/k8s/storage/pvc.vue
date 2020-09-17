@@ -1,12 +1,12 @@
 <template>
     <div>
-        <i-table border stripe :columns="format" :data="pvc_list">
+        <i-table border stripe :columns="format" :data="show_list">
             <template slot-scope="{ row, index }" slot="action">
                     <Button type="error" size="default"  @click="del_pvc(index)">删除</Button>
             </template>
         </i-table >
         <div style="text-align: center;margin-top: 10px;">
-            <Page :total="total" show-sizer show-elevator show-total/>
+            <Page ref="page" :total="total" :page-size="pageSize"  @on-change="changePage" show-total/>
         </div>
     </div>
 </template>
@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios';
 import { delete_pvc, get_pvc_list} from  '@/api'
+import { delete_namespace_resource } from '@/common/util.js'
 // import store from '@/store'
 
 export default {
@@ -22,7 +23,6 @@ export default {
             format: [
                 {
                     title: '名字',key: 'name',width: 300,
-
                 },
                 {
                     title: '命名空间',key: 'namespace',width:150,
@@ -53,43 +53,26 @@ export default {
                 }
 
             ],
-            pvc_list: [],
+            total_list: [],
+            show_list: [],
             // 分页
             total: 0,
+            pageSize: 15,
         }
     },
     methods: {
+        changePage(index) {
+            let _start = (index -1) * this.pageSize
+            let _end = index * this.pageSize
+            this.show_list = this.total_list.slice(_start,_end)
+        },
         del_pvc(index) {
-            let namespace = localStorage.getItem('currentNameSpace')
-            if (namespace ==null || namespace == 'all'){
-                alert("去选择具体的namespace")
-                return
-            }
-            let name = this.pvc_list[index].name
+            let name = this.show_list[index].name
             let result = confirm("确定要删除"+name+"吗?")
             if(result == false) return 
-            let cluster = localStorage.getItem('currentCluster')
-
-            let url = delete_pvc
-            let headers = {"cluster_name": cluster }
-            let data= {"namespace":namespace,"name":name}
-            let method='post'
-            if(cluster){
-                axios({
-                    url:url,headers:headers,data:data,method:method
-                }).then( (response) => {
-                    console.log(response.data)
-                    let info = JSON.stringify(response.data)
-                    if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除PVC成功')
-                        this.refresh()
-                    }else {
-                        alert(info)
-                    }
-                }).catch(function (error){
-                    console.log(error)
-                })
-            }
+            let namespace = this.show_list[index].namespace
+            delete_namespace_resource(namespace,name,delete_pvc)
+            this.refresh()
         },
         refresh() {
             let cluster = localStorage.getItem('currentCluster')
@@ -102,9 +85,17 @@ export default {
                 axios({
                     url:url,headers:headers,data:data,method:method
                 }).then( (response) => {
-                    console.log(response.data.length);
-                    this.pvc_list = response.data
+                    this.total_list = response.data
                     this.total = response.data.length
+                    if(this.total < this.pageSize) {
+                        this.show_list = this.total_list
+                    }else {
+                        // 修改改数据之后显示回到第一页的bug，改为停留在当前页
+                        let currentPage = this.$refs.page.currentPage
+                        let _start = (currentPage-1) * this.pageSize
+                        let _end = currentPage * this.pageSize
+                        this.show_list = this.total_list.slice(_start,_end)
+                    }
                 }).catch(function (error){
                     console.log(error)
                 })

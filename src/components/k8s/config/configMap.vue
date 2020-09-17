@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe :columns="format" :data="show_list" height="785">
+        <i-table border stripe :columns="format" :data="show_list" height="760">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" size="default" style="margin-left: 5px;"  @click="del_configmap(index)">删除</Button>
             </template>
@@ -46,7 +46,7 @@ export default {
                     title: '命名空间',key: 'namespace'
                 },
                 {
-                    title: '标签',key: 'labels',width: 350,
+                    title: '标签',key: 'labels',width: 500,
                     render: (h, params) => {
                         return h('div', [
                             h('pre', JSON.stringify(params.row.labels,undefined,4))
@@ -64,7 +64,7 @@ export default {
             show_list: [],
             // 分页
             total: 0,
-            pageSize: 10,
+            pageSize: 15,
         }
     },
     methods: {
@@ -146,15 +146,13 @@ export default {
     },
     mounted: function() {
         this.refresh();
-        // this.$bus.$on('clusterChange', ()=> {
-        //     this.refresh()
-        // })
-        // this.$bus.$on('namespaceChange', ()=> {
-        //     this.refresh()
-        // })
     }
 }
 </script>
-<style scoped>
-
+<style>
+    pre{
+        white-space: pre-wrap!important;
+        word-wrap: break-word!important;
+        *white-space:normal!important;
+    }
 </style>

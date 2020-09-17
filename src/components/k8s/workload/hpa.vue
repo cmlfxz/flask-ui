@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe  :columns="format" :data="show_list" height="840">
+        <i-table border stripe  :columns="format" :data="show_list" height="760">
         </i-table >
     </div>
 </template>

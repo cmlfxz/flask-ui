@@ -51,9 +51,9 @@ export default {
                 {
                     title: '创建时间',key: 'create_time'
                 },
-                {
-                    title: '操作',slot: 'action',align: 'center'
-                }
+                // {
+                //     title: '操作',slot: 'action',align: 'center'
+                // }
             ],
             show_list: [],
         }
@@ -77,18 +77,9 @@ export default {
                 })
             }
         },
-        // del_cronjob(index){
-
-        // }
     },
     mounted: function() {
         this.refresh();
-        // this.$bus.$on('clusterChange', ()=> {
-        //     this.refresh()
-        // })
-        // this.$bus.$on('namespaceChange', ()=> {
-        //     this.refresh()
-        // })
     }
 }
 </script>

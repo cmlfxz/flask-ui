@@ -2,7 +2,7 @@
     <!-- value是默认选中的tab -->
     <Tabs ref="pod_tab" value="by_namespace" @on-click="changeTab" >
         <TabPane label="按命名空间" name="by_namespace">
-            <i-table border stripe  :columns="format" :data="show_pod_list_by_namespace" height="740">
+            <i-table border stripe  :columns="format" :data="show_pod_list_by_namespace" height="760">
                 <template slot-scope="{ row, index }" slot="action">
                     <Button type="error" style="margin-bottom: 5px "  @click="del_namespace_pod(index)">删除</Button>
                 </template>
@@ -43,6 +43,7 @@
 <script>
 import axios from 'axios';
 import { delete_pod,get_pod_list_by_node,get_namespaced_pod_list,get_node_name_list} from  '@/api'
+import { delete_namespace_resource } from '@/common/util.js'
 // import store from '@/store'
 
 export default {
@@ -149,29 +150,12 @@ export default {
             }
         },
         del_pod(namespace,pod_name){
-            console.log("delete namespace pod_name:",namespace,pod_name)
-            let result = confirm("确定要删除"+pod_name+"吗?")
+            let name = pod_name
+            let result = confirm("确定要删除"+name+"吗?")
             if(result == false) return 
-            let cluster = localStorage.getItem('currentCluster')
-            let headers = {"cluster_name": cluster }
-            let data = JSON.stringify({"namespace":namespace,"pod_name":pod_name})
-            let url = delete_pod
-            let method='post'
-            if(cluster){
-                axios({
-                    url:url,headers: headers,data:data,method:method
-                }).then( (response) => {
-                    let info = JSON.stringify(response.data)
-                    if(info.indexOf('ok') != -1) {
-                        this.$Message.success('删除pod成功')
-                        this.refresh()
-                    }else {
-                        alert(info)
-                    }
-                }).catch(function (error){
-                    console.log(error)
-                })
-            }
+            delete_namespace_resource(namespace,name,delete_pod)
+            this.refresh()
+
         },
         del_namespace_pod(index){
             // alert(this.show_pod_list_by_namespace[index].name)
@@ -196,23 +180,6 @@ export default {
             // 记录下tab页的名字，后续有用
             this.tab_name = name
             this.refresh_by_tab(name)
-            // if(name=='by_namespace'){
-            //     // 调用可以重置page total等数据
-            //     this.refresh_pod_by_namespace()
-            // }else if(name=='by_node') {
-            //     // this.refresh_pod_by_node()
-            //     // 显示node选择
-            //     let node_list = await this.get_obj_list(get_node_name_list)
-            //     if(node_list){
-            //         this.node_list = node_list
-            //         // 设置默认选中
-            //         this.node = this.node_list[0]
-            //         this.refresh_pod_by_node()
-            //     }
-            // } else {
-            //     alert("没有此tab页:",name)
-            //     return
-            // }
         },
         changeNode() {
             // alert(this.node)
