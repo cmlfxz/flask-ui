@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-ui-1.7
+  name: flask-ui-0.1
   namespace: ms-prod
 spec:
   template:
@@ -26,16 +26,16 @@ spec:
                 secretKeyRef:
                   name: mysecret
                   key: redis_password
-            - name: ACCESS_ID
-              valueFrom:
-                secretKeyRef:
-                  name: mysecret
-                  key: access_id
-            - name: ACCESS_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: mysecret
-                  key: access_secret
+            # - name: ACCESS_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: mysecret
+            #       key: access_id
+            # - name: ACCESS_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: mysecret
+            #       key: access_secret
           livenessProbe:
             tcpSocket:
             # httpGet:

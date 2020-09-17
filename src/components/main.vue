@@ -7,7 +7,7 @@
                     <!-- :open-names="['app']"   -->
                     <Menu  ref="sideBarMenu"   :open-names="openNames"  :theme="theme2" width="auto" :active-name="activeMenuItem" @on-select="menuItemSelect"  @on-open-change="openChange" :class="menuitemClasses"  accordion>
                     <Submenu name="post">
-                        <template slot="title"> <Icon type="ios-book" /> 笔记</template>
+                        <template slot="title"> <Icon type="ios-book" /> 灵犀笔记</template>
                         <MenuItem name="postList" :to="{ name: 'postList'}">笔记列表</MenuItem>
                         <MenuItem name="postAdd" :to="{ name: 'postAdd'}">写笔记</MenuItem>
                     </Submenu>
@@ -62,7 +62,7 @@
                         <MenuItem name="cronjob" :to="{ name: 'cronjob'}">定时任务</MenuItem>
                     </Submenu>
                     <Submenu name="auth">
-                        <template slot="title"><Icon type="ios-clock" />权限管理</template>
+                        <template slot="title"><Icon type="md-finger-print" />权限管理</template>
                         <MenuItem name="serviceAccount" :to="{ name: 'serviceAccount'}">账号管理</MenuItem>
                         <MenuItem name="clusterRole" :to="{ name: 'clusterRole'}">集群角色</MenuItem>
                         <MenuItem name="clusterRoleBinding" :to="{ name: 'clusterRoleBinding'}">集群角色绑定</MenuItem>
@@ -441,20 +441,25 @@
         background: #fff;
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
-    .layout-logo-left{
+    /* .layout-logo-left{
         width: 90%;
         height: 30px;
         background: #5b6270;
         border-radius: 3px;
         margin: 15px auto;
-    }
-    .menu-icon{
+    } */
+    /* .layout-nav{
+        width: 420px;
+        margin: 0 auto;
+        margin-right: 20px;
+    } */
+    /* .menu-icon{
         transition: all .3s;
     }
     .rotate-icon{
         transform: rotate(-90deg);
-    }
-    .menu-item span{
+    } */
+    /* .menu-item span{
         display: inline-block;
         overflow: hidden;
         width: 69px;
@@ -462,14 +467,19 @@
         white-space: nowrap;
         vertical-align: bottom;
         transition: width .2s ease .2s;
-    }
+    } */
+    /* 图标 */
     .menu-item i{
         transform: translateX(0px);
         transition: font-size .2s ease, transform .2s ease;
         vertical-align: middle;
-        font-size: 16px;
+        font-size: 40px;
     }
-    .collapsed-menu span{
+    .menu-item a {
+        font-size: 15px;
+        margin-left: 10px;
+    }
+    /* .collapsed-menu span{
         width: 0px;
         transition: width .2s ease;
     }
@@ -478,7 +488,7 @@
         transition: font-size .2s ease .2s, transform .2s ease .2s;
         vertical-align: middle;
         font-size: 22px;
-    }
+    } */
     .header-right {
         position: absolute;
         right: 0;

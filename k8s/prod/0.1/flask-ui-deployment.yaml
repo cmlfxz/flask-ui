@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-ui-1.7
+  name: flask-ui-0.1
   namespace: ms-prod
   labels:
     app: flask-ui
-    version: "1.7"
+    version: "0.1"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: flask-ui
-      version: "1.7"
+      version: "0.1"
   template:
     metadata:
       labels:
         app: flask-ui
-        version: "1.7"
+        version: "0.1"
     spec:
       serviceAccountName: flask-ui-sa
       imagePullSecrets: 
       - name: harborsecret 
       containers:
       - name: flask-ui
-        image: myhub.mydocker.com/ms-prod/flask-ui:1.7
+        image: myhub.mydocker.com/ms-prod/flask-ui:0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 80

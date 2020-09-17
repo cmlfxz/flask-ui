@@ -54,7 +54,7 @@ if [ "$1" == "dev" ];then
     tag=$(git rev-parse --short HEAD)
     echo "$tag"
     # 变量 环境 项目 服务名  副本数 仓库地址 (tag)
-    npm install --registry=https://registry.npm.taobao.org
+    npm install -g --registry=https://registry.npm.taobao.org
     npm run test
     docker login -u $harbor_user -p $harbor_pass $harbor_registry
     cd k8s
@@ -76,7 +76,7 @@ elif [ "$1" == "prod" ];then
     echo "$tag"
     git checkout $tag
 
-    npm install --registry=https://registry.npm.taobao.org
+    npm install -g --registry=https://registry.npm.taobao.org
     npm run prod
     docker login -u $harbor_user -p $harbor_pass $harbor_registry
     cd k8s
