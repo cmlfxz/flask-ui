@@ -1,10 +1,14 @@
 <template>
     <div>
-        <i-table border stripe  :columns="format" :data="show_list" height="840">
+        <i-table border stripe  :columns="format" :data="show_list" height="760">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" style="margin-bottom: 5px "  @click="del_ingress(index)">删除</Button>
             </template>
+
         </i-table >
+        <div style="text-align: center;margin-top: 10px;">
+            <Page ref="page" :total="total" :page-size="pageSize"  @on-change="changePage" show-total/>
+        </div>
     </div>
 </template>
 
@@ -50,10 +54,19 @@ export default {
                     title: '操作',slot: 'action',width: 100,align: 'center'
                 }
             ],
+            total_list: [],
             show_list: [],
+            // 分页
+            total: 0,
+            pageSize: 15,
         }
     },
     methods: {
+        changePage(index) {
+            let _start = (index -1) * this.pageSize
+            let _end = index * this.pageSize
+            this.show_list = this.total_list.slice(_start,_end)
+        },
         del_ingress(index){
             let name = this.show_list[index].name
             let result = confirm("确定要删除"+name+"吗?")
@@ -73,8 +86,17 @@ export default {
                 axios({
                     url:url,headers: headers,data:data,method:method
                 }).then( (response) => {
-                    console.log(response.data);
-                    this.show_list = response.data
+                    this.total_list = response.data
+                    this.total = response.data.length
+                    if(this.total < this.pageSize) {
+                        this.show_list = this.total_list
+                    }else {
+                        // 修改改数据之后显示回到第一页的bug，改为停留在当前页
+                        let currentPage = this.$refs.page.currentPage
+                        let _start = (currentPage-1) * this.pageSize
+                        let _end = currentPage * this.pageSize
+                        this.show_list = this.total_list.slice(_start,_end)
+                    }
                 }).catch(function (error){
                     console.log(error)
                 })

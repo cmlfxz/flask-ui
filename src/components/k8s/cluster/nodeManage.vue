@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table  :columns="format" :data="node_list" height="760">
+        <i-table  :columns="format" :data="show_list" height="780">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="primary"  style="margin-bottom: 5px " @click="add_taint(index)">增加污点</Button>
                 <Button type="error" style="margin-bottom: 5px "  @click="del_taint(index)">删除污点</Button>
@@ -8,9 +8,9 @@
                 <Button type="error"   @click="del_label(index)">删标签</Button> 
             </template>
         </i-table>
-        <!-- <div style="text-align: center;margin-top: 10px;">
+        <div style="text-align: center;margin-top: 10px;">
             <Page ref="page" :total="total" :page-size="pageSize"  @on-change="changePage" show-total/>
-        </div> -->
+        </div>
         <!-- 添加污点模态框 -->
         <Modal v-model="show_add_taint_modal" width="600">
             <p slot="header" style="color:#f60;text-align:center">
@@ -160,7 +160,11 @@ export default {
                     { required: true, message: '请输入taint_value.', trigger: 'blur' },
                 ]
             },
-            node_list: [],
+            total_list: [],
+            show_list: [],
+            // 分页
+            total: 0,
+            pageSize: 15,
             // add_taint data
             show_add_taint_modal: false,
             show_del_taint_modal: false,
@@ -195,8 +199,13 @@ export default {
         }
     },
     methods: {
+        changePage(index) {
+            let _start = (index -1) * this.pageSize
+            let _end = index * this.pageSize
+            this.show_list = this.total_list.slice(_start,_end)
+        },
         add_taint(index){
-            let node_name = this.node_list[index].name;
+            let node_name = this.show_list[index].name;
             this.node_name = node_name
             console.log("add_taint node_name:",node_name)
             this.show_add_taint_modal = true;
@@ -234,8 +243,8 @@ export default {
         },
         // 删除污点点击事件
         del_taint(index) {
-            let node_name = this.node_list[index].name;
-            let taints = this.node_list[index].taints
+            let node_name = this.show_list[index].name;
+            let taints = this.show_list[index].taints
             this.node_name = node_name
             this.taints = taints
             console.log("add_taint taints:",this.taints)   
@@ -277,7 +286,7 @@ export default {
         },
         // 点击打标签事件
         add_label(index) {
-            let node_name = this.node_list[index].name;
+            let node_name = this.show_list[index].name;
             this.node_name = node_name
             console.log("add_label node_name:",node_name)
             this.show_add_label_modal = true;  
@@ -316,8 +325,8 @@ export default {
         },
         // 点击删标签事件
         del_label(index) {
-            let node_name = this.node_list[index].name;
-            let labels = this.node_list[index].labels
+            let node_name = this.show_list[index].name;
+            let labels = this.show_list[index].labels
             delete labels["beta.kubernetes.io/arch"]
             delete labels["beta.kubernetes.io/os"]
             delete labels["kubernetes.io/arch"]
@@ -373,8 +382,19 @@ export default {
                     method: 'post',
                     url: get_node_detail_list,
                     headers: {"cluster_name":cluster },
-                }).then(response => (this.node_list = response.data))
-                .catch(function (error){
+                }).then( (response) => {
+                    this.total_list = response.data
+                    this.total = response.data.length
+                    if(this.total < this.pageSize) {
+                        this.show_list = this.total_list
+                    }else {
+                        // 修改改数据之后显示回到第一页的bug，改为停留在当前页
+                        let currentPage = this.$refs.page.currentPage
+                        let _start = (currentPage-1) * this.pageSize
+                        let _end = currentPage * this.pageSize
+                        this.show_list = this.total_list.slice(_start,_end)
+                    }
+                }).catch(function (error){
                     console.log(error);
                 })
             }

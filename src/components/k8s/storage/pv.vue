@@ -4,7 +4,7 @@
             <i-button type="primary" style="margin-right: 10px" @click="create_pv">创建PV</i-button>
             <i-button type="error" @click="multi_del_pv">批量删除</i-button>
         </div>
-        <i-table border stripe ref="pv_table" @on-selection-change="onSelect" :columns="format" :data="show_list" height="760">
+        <i-table border stripe ref="pv_table" @on-selection-change="onSelect" :columns="format" :data="show_list" height="740">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" size="default"  @click="del_pv(index)">删除</Button>
             </template>

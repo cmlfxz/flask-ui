@@ -1,12 +1,15 @@
 <template>
     <div>
-        <i-table border stripe  :columns="format" :data="show_list" height="760">
+        <i-table border stripe  :columns="format" :data="show_list" height="780">
             <template slot-scope="{ row, index }" slot="action">
                 <!-- <Button type="primary" style="margin-right: 5px "  @click="gray_release(index)">灰度发布</Button> -->
                 <Button  v-if="test_gray(index)" type="primary" style="margin-right: 5px;" @click="gray_release(index)">灰度发布</Button>
                 <Button type="error" style="margin-bottom: 5px "  @click="del_virtual_service(index)">删除</Button>
             </template>
         </i-table >
+        <div style="text-align: center;margin-top: 10px;">
+            <Page ref="page" :total="total" :page-size="pageSize"  @on-change="changePage" show-total/>
+        </div>
         <!-- 灰度发布模态框 -->
         <Modal v-model="show_gray_release_modal" width="600">
             <p slot="header" style="color:#f60;text-align:center;">
@@ -66,13 +69,22 @@ export default {
                 }
 
             ],
+            total_list: [],
             show_list: [],
+            // 分页
+            total: 0,
+            pageSize: 10,
             show_gray_release_modal: false,
             gray_value: 10,
             vs_name: '',
         }
     },
     methods: {
+        changePage(index) {
+            let _start = (index -1) * this.pageSize
+            let _end = index * this.pageSize
+            this.show_list = this.total_list.slice(_start,_end)
+        },
         // 检测是否含有灰度的配置比如 weight
         test_gray(index){
             let labels = JSON.stringify(this.show_list[index].http)
@@ -169,8 +181,17 @@ export default {
                 axios({
                     url:url,headers: headers,data:data,method:method
                 }).then( (response) => {
-                    // console.log(response.data);
-                    this.show_list = response.data
+                    this.total_list = response.data
+                    this.total = response.data.length
+                    if(this.total < this.pageSize) {
+                        this.show_list = this.total_list
+                    }else {
+                        // 修改改数据之后显示回到第一页的bug，改为停留在当前页
+                        let currentPage = this.$refs.page.currentPage
+                        let _start = (currentPage-1) * this.pageSize
+                        let _end = currentPage * this.pageSize
+                        this.show_list = this.total_list.slice(_start,_end)
+                    }
                 }).catch(function (error){
                     console.log(error)
                 })

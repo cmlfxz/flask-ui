@@ -2,7 +2,7 @@
     <!-- value是默认选中的tab -->
     <Tabs ref="pod_tab" value="by_namespace" @on-click="changeTab" >
         <TabPane label="按命名空间" name="by_namespace">
-            <i-table border stripe  :columns="format" :data="show_pod_list_by_namespace" height="760">
+            <i-table border stripe  :columns="format" :data="show_pod_list_by_namespace" height="740">
                 <template slot-scope="{ row, index }" slot="action">
                     <Button type="error" style="margin-bottom: 5px "  @click="del_namespace_pod(index)">删除</Button>
                 </template>

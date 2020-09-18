@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-table border stripe :columns="format" :data="show_list" height="800">
+        <i-table border stripe :columns="format" :data="show_list" height="780">
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="error" size="default" style="margin-left: 5px;"  @click="del_configmap(index)">删除</Button>
             </template>
