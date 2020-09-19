@@ -41,8 +41,12 @@
 
 权限管理
 <br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/8.jpg)<br>
+
 环境管理
 <br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/9.jpg)<br>
+
+网站链接
+<br>![image](https://gitee.com/cmlfxz/flask-ui/raw/master/image/10.jpg)<br>
 
 
 
