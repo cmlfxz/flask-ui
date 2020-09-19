@@ -1,6 +1,8 @@
 <template>
     <div>
-        <i-table border stripe :columns="format" :data="show_list"></i-table >
+        <i-table border stripe :columns="format" :data="show_list" height="780">
+
+        </i-table >
         <!-- <div style="text-align: center;margin-top: 10px;">
             <Page :total="total" show-sizer show-elevator show-total/>
         </div> -->

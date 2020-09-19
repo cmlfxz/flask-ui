@@ -69,9 +69,13 @@
                         <MenuItem name="role" :to="{ name: 'role'}">普通角色</MenuItem>
                         <MenuItem name="roleBinding" :to="{ name: 'roleBinding'}">普通角色绑定</MenuItem>
                     </Submenu>
+                    <Submenu name="link">
+                        <template slot="title"><Icon type="md-settings" />网站链接</template>
+                        <MenuItem name="siteManage" :to="{ name: 'siteManage'}">站链管理</MenuItem>
+                    </Submenu>
                     <Submenu name="setting">
                         <template slot="title"><Icon type="md-settings" />系统配置</template>
-                        <MenuItem name="env" :to="{ name: 'env'}">环境管理</MenuItem>
+                        <MenuItem name="env" :to="{ name: 'env'}">环境管理</MenuItem> 
                     </Submenu>
                 </Menu>
             </Sider>

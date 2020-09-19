@@ -3,6 +3,14 @@ let  gateway = process.env.VUE_APP_API_URL
 
 export const  loginUrl = gateway + "/auth"+"/login"
 
+// site
+export const site_delete = gateway + "/site"+"/delete";
+export const site_add = gateway + "/site"+"/add";
+export const site_update= gateway + "/site"+"/update";
+export const site_list= gateway + "/site"+"/list";
+export const list_by_env= gateway + "/site"+"/list_by_env";
+export const get_site_by_env_name= gateway + "/site"+"/get_site_by_env_name";
+
 // admin
 export const get_cluster_name_list = gateway + "/admin"+"/get_cluster_name_list";
 export const cluster_list = gateway + "/admin"+"/cluster_list"
@@ -15,6 +23,7 @@ export const get_env_by_project_name = gateway + "/admin"+"/get_env_by_project_n
 export const get_cluster_by_env_name = gateway + "/admin"+"/get_cluster_by_env_name";
 export const get_project_list = gateway + "/admin"+"/get_project_list";
 export const get_env_list = gateway +  "/admin"+"/get_env_list" 
+export const get_env_name_list = gateway +  "/admin"+"/get_env_name_list" 
 
 //blog
 export const blog_delete = gateway + "/blog"+"/delete";

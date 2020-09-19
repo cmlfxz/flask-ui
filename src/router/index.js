@@ -48,6 +48,12 @@ const routes = [
                     title: '首页'
                 },
             },
+            // link
+            {
+                path: '/siteManage',
+                name: 'siteManage',
+                component:resolve=>{require(['@/components/link/siteManage'],resolve);}
+            },
             // post
             {
                 path: '/postAdd',

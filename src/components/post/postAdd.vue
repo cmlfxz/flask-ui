@@ -28,9 +28,6 @@ export default {
                 title:[
                     {required: true,message:"请输入标题",trigger: 'blur'},
                 ],
-                // username: [
-                //     {required: true,message:'请输入用户名',trigger: 'blur'}
-                // ],
                 body:[
                     {required: true,message:"请输入内容",trigger: 'blur'},
                 ],
